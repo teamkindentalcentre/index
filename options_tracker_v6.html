@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Options Tracker | SGD Goal Tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg:#07090f; --surface:#0d1321; --surface2:#141f33; --border:#1c2d47;
+  --accent:#00c8f0; --green:#00dfa0; --red:#ff3d5e; --yellow:#ffc944;
+  --purple:#9d7dff; --orange:#ff8c42; --text:#deeaf8; --muted:#4e6a88;
+  --radius:12px; --font-mono:'Space Mono',monospace; --font:'DM Sans',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:100vh;
+  background-image:radial-gradient(ellipse at 10% 0%,rgba(0,200,240,0.07) 0%,transparent 55%),
+    radial-gradient(ellipse at 90% 100%,rgba(0,223,160,0.05) 0%,transparent 55%);}
+
+/* HEADER */
+header{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;
+  border-bottom:1px solid var(--border);background:rgba(13,19,33,0.97);
+  backdrop-filter:blur(12px);position:sticky;top:0;z-index:100;gap:12px;flex-wrap:wrap;}
+.logo h1{font-family:var(--font-mono);font-size:0.9rem;color:var(--accent);letter-spacing:0.04em;}
+.logo span{font-size:0.7rem;color:var(--muted);margin-top:1px;display:block;}
+.header-right{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.sync-badge{display:flex;align-items:center;gap:6px;background:var(--surface2);
+  border:1px solid var(--border);padding:5px 11px;border-radius:20px;font-size:0.72rem;color:var(--muted);}
+.sdot{width:7px;height:7px;border-radius:50%;background:var(--muted);flex-shrink:0;transition:all 0.3s;}
+.sdot.ok{background:var(--green);box-shadow:0 0 7px var(--green);}
+.sdot.err{background:var(--red);}
+.sdot.pulse{background:var(--yellow);animation:blink 1s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+.hdr-bal{text-align:right;}
+.hdr-bal .lbl{font-size:0.66rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;}
+.hdr-bal .val{font-family:var(--font-mono);font-size:1.45rem;font-weight:700;color:var(--accent);line-height:1.1;}
+
+/* FX RATE PILL */
+.fx-pill{display:flex;align-items:center;gap:7px;background:rgba(255,140,66,0.1);
+  border:1px solid rgba(255,140,66,0.3);padding:5px 12px;border-radius:20px;font-size:0.72rem;}
+.fx-pill span{color:var(--orange);font-family:var(--font-mono);font-weight:700;}
+.fx-pill input{background:none;border:none;color:var(--orange);font-family:var(--font-mono);
+  font-size:0.72rem;font-weight:700;width:44px;outline:none;text-align:right;}
+
+/* P&L BANNER */
+.pnl-banner{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));
+  gap:0;border-bottom:1px solid var(--border);background:var(--surface);}
+.pnl-cell{padding:13px 20px;border-right:1px solid var(--border);}
+.pnl-cell:last-child{border-right:none;}
+.pnl-cell .lbl{font-size:0.63rem;color:var(--muted);text-transform:uppercase;
+  letter-spacing:0.09em;margin-bottom:5px;font-family:var(--font-mono);}
+.pnl-cell .val{font-family:var(--font-mono);font-size:1.05rem;font-weight:700;}
+.pnl-cell .sub{font-size:0.66rem;color:var(--muted);margin-top:3px;}
+
+/* PROGRESS */
+.prog-wrap{padding:12px 28px;border-bottom:1px solid var(--border);background:var(--surface);}
+.prog-labels{display:flex;justify-content:space-between;font-size:0.7rem;color:var(--muted);margin-bottom:7px;}
+.prog-labels .mid{color:var(--accent);font-family:var(--font-mono);font-weight:700;}
+.prog-track{height:7px;background:var(--border);border-radius:99px;overflow:hidden;}
+.prog-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--accent),var(--green));transition:width 0.7s cubic-bezier(.4,0,.2,1);}
+
+/* NAV */
+nav{display:flex;align-items:center;gap:5px;padding:11px 28px;
+  background:var(--surface);border-bottom:1px solid var(--border);overflow-x:auto;}
+nav button{background:none;border:1px solid var(--border);color:var(--muted);
+  padding:7px 15px;border-radius:7px;cursor:pointer;font-size:0.82rem;
+  font-family:var(--font);white-space:nowrap;transition:all 0.18s;}
+nav button.active{background:var(--accent);color:#000;border-color:var(--accent);font-weight:700;}
+nav button:hover:not(.active){border-color:var(--accent);color:var(--accent);}
+.btn-csv{margin-left:auto;background:none;border:1px solid var(--green);color:var(--green);
+  padding:7px 13px;border-radius:7px;cursor:pointer;font-size:0.78rem;
+  font-family:var(--font);white-space:nowrap;transition:all 0.18s;}
+.btn-csv:hover{background:rgba(0,223,160,0.1);}
+
+/* PAGES */
+.page{display:none;padding:26px 28px;max-width:1440px;margin:0 auto;}
+.page.active{display:block;}
+
+/* STAT CARDS */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:12px;margin-bottom:22px;}
+.scard{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:16px 18px;transition:border-color 0.2s,transform 0.2s;}
+.scard:hover{border-color:var(--accent);transform:translateY(-2px);}
+.scard .lbl{font-size:0.63rem;color:var(--muted);text-transform:uppercase;
+  letter-spacing:0.09em;margin-bottom:7px;font-family:var(--font-mono);}
+.scard .val{font-family:var(--font-mono);font-size:1.25rem;font-weight:700;line-height:1.1;}
+.scard .sub{font-size:0.67rem;color:var(--muted);margin-top:4px;}
+.cg{color:var(--green);}.cr{color:var(--red);}.cy{color:var(--yellow);}
+.cb{color:var(--accent);}.cp{color:var(--purple);}.co{color:var(--orange);}
+
+/* CHARTS */
+.charts-row{display:grid;grid-template-columns:2fr 1fr;gap:14px;margin-bottom:16px;}
+.ccrd{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;}
+.ccrd h3{font-size:0.63rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.09em;
+  margin-bottom:14px;font-family:var(--font-mono);}
+@media(max-width:720px){.charts-row{grid-template-columns:1fr;}}
+
+/* TABLE */
+.tcrd{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.twrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:0.81rem;}
+thead{background:var(--surface2);}
+th{padding:10px 12px;text-align:left;font-size:0.62rem;color:var(--muted);
+  text-transform:uppercase;letter-spacing:0.09em;font-family:var(--font-mono);white-space:nowrap;}
+td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:middle;}
+tbody tr:hover td{background:var(--surface2);}
+tbody tr:last-child td{border-bottom:none;}
+.mono{font-family:var(--font-mono);}
+
+/* BADGES */
+.badge{display:inline-block;padding:2px 8px;border-radius:5px;font-size:0.64rem;font-weight:700;font-family:var(--font-mono);}
+.b-call{background:rgba(0,200,240,0.12);color:var(--accent);}
+.b-put{background:rgba(255,61,94,0.12);color:var(--red);}
+.b-open{background:rgba(255,201,68,0.12);color:var(--yellow);}
+.b-closed{background:rgba(0,223,160,0.12);color:var(--green);}
+.b-expired{background:rgba(78,106,136,0.2);color:var(--muted);}
+.b-us{background:rgba(0,200,240,0.1);color:var(--accent);}
+.b-sg{background:rgba(0,223,160,0.1);color:var(--green);}
+.b-usd{background:rgba(255,140,66,0.15);color:var(--orange);font-size:0.6rem;}
+.b-sgd{background:rgba(0,200,240,0.1);color:var(--accent);font-size:0.6rem;}
+
+/* FORM */
+.fcrd{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:18px;}
+.fcrd h3{font-size:0.95rem;font-weight:700;margin-bottom:18px;}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:12px;}
+.fg{display:flex;flex-direction:column;gap:5px;}
+.fg label{font-size:0.62rem;color:var(--muted);text-transform:uppercase;
+  letter-spacing:0.09em;font-family:var(--font-mono);}
+.fg input,.fg select{background:var(--surface2);border:1px solid var(--border);
+  color:var(--text);border-radius:7px;padding:9px 11px;font-size:0.86rem;
+  font-family:var(--font);outline:none;transition:border-color 0.2s;}
+.fg input:focus,.fg select:focus{border-color:var(--accent);}
+.fg select option{background:var(--surface2);}
+.hint{font-size:0.66rem;color:var(--muted);margin-top:2px;}
+.factions{margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;}
+.btn{padding:9px 22px;border-radius:7px;border:none;cursor:pointer;
+  font-size:0.87rem;font-weight:700;font-family:var(--font);transition:all 0.2s;}
+.btn-p{background:var(--accent);color:#000;}
+.btn-p:hover{background:#00e4ff;transform:translateY(-1px);}
+.btn-g{background:none;border:1px solid var(--border);color:var(--muted);}
+.btn-g:hover{border-color:var(--accent);color:var(--accent);}
+
+/* CURRENCY INDICATOR in form */
+.ccy-note{font-size:0.68rem;margin-top:3px;font-family:var(--font-mono);font-weight:700;}
+.ccy-usd{color:var(--orange);}
+.ccy-sgd{color:var(--accent);}
+
+/* CAPITAL SETTINGS BANNER */
+.cap-banner{background:linear-gradient(135deg,rgba(0,200,240,0.07),rgba(157,125,255,0.05));
+  border:1px solid rgba(0,200,240,0.25);border-radius:var(--radius);
+  padding:18px 22px;margin-bottom:22px;display:flex;align-items:flex-start;gap:20px;flex-wrap:wrap;}
+.cap-field{display:flex;flex-direction:column;gap:5px;}
+.cap-field .lbl{font-size:0.68rem;color:var(--muted);text-transform:uppercase;
+  letter-spacing:0.08em;font-family:var(--font-mono);}
+.cap-field input{background:var(--surface2);border:1px solid var(--border);color:var(--text);
+  border-radius:7px;padding:8px 12px;font-size:0.9rem;font-family:var(--font-mono);
+  font-weight:700;outline:none;width:165px;transition:border-color 0.2s;}
+.cap-field input:focus{border-color:var(--accent);}
+.cap-info{font-size:0.78rem;color:var(--muted);line-height:1.7;padding-top:22px;}
+.cap-info strong{color:var(--text);}
+
+/* TOP-UP LOG */
+.topup-row{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;margin-bottom:14px;}
+.topup-history{margin-top:12px;}
+.topup-item{display:flex;justify-content:space-between;align-items:center;
+  padding:8px 12px;background:var(--surface2);border-radius:7px;margin-bottom:6px;font-size:0.82rem;}
+
+/* RISK */
+.rgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin-bottom:20px;}
+.rcrd{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px;}
+.rcrd .lbl{font-size:0.62rem;color:var(--muted);text-transform:uppercase;
+  letter-spacing:0.09em;margin-bottom:8px;font-family:var(--font-mono);}
+.rcrd .val{font-family:var(--font-mono);font-size:1.85rem;font-weight:700;}
+.rcrd .note{font-size:0.72rem;color:var(--muted);margin-top:5px;line-height:1.5;}
+.mbar{height:5px;background:var(--border);border-radius:99px;margin-top:11px;overflow:hidden;}
+.mfill{height:100%;border-radius:99px;transition:width 0.5s;}
+
+/* ASSIGNMENT */
+.assign-banner{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:12px;margin-bottom:22px;}
+.assign-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;}
+.assign-card .lbl{font-size:0.63rem;color:var(--muted);text-transform:uppercase;
+  letter-spacing:0.09em;margin-bottom:7px;font-family:var(--font-mono);}
+.assign-card .val{font-family:var(--font-mono);font-size:1.2rem;font-weight:700;}
+.assign-card .sub{font-size:0.67rem;color:var(--muted);margin-top:4px;}
+
+/* SETUP */
+.setup-banner{background:linear-gradient(135deg,rgba(0,200,240,0.07),rgba(0,223,160,0.04));
+  border:1px solid var(--accent);border-radius:var(--radius);padding:20px 24px;margin-bottom:20px;}
+.setup-banner h3{color:var(--accent);font-size:0.92rem;margin-bottom:6px;}
+.setup-banner p{font-size:0.82rem;color:var(--muted);line-height:1.6;}
+.setup-banner input{margin-top:12px;width:100%;max-width:520px;background:var(--surface2);
+  border:1px solid var(--border);color:var(--text);border-radius:7px;padding:9px 12px;
+  font-size:0.84rem;font-family:var(--font-mono);outline:none;}
+.setup-banner input:focus{border-color:var(--accent);}
+.setup-row{display:flex;gap:10px;margin-top:10px;align-items:center;flex-wrap:wrap;}
+
+/* MODAL */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:200;
+  justify-content:center;align-items:center;backdrop-filter:blur(5px);}
+.overlay.open{display:flex;}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:16px;
+  padding:28px;width:92%;max-width:700px;max-height:90vh;overflow-y:auto;}
+.modal h3{font-size:0.95rem;font-weight:700;margin-bottom:18px;color:var(--accent);}
+.modal-btns{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap;}
+
+/* TOAST */
+.toast{position:fixed;bottom:22px;right:22px;z-index:300;background:var(--surface2);
+  border:1px solid var(--border);color:var(--text);padding:11px 18px;border-radius:9px;
+  font-size:0.83rem;box-shadow:0 8px 30px rgba(0,0,0,0.5);transform:translateY(70px);
+  opacity:0;transition:all 0.28s cubic-bezier(.4,0,.2,1);max-width:320px;}
+.toast.show{transform:translateY(0);opacity:1;}
+.toast.tok{border-color:var(--green);}
+.toast.terr{border-color:var(--red);}
+
+/* MISC */
+.empty{text-align:center;padding:55px 20px;color:var(--muted);}
+.empty .ico{font-size:2.5rem;margin-bottom:10px;}
+.del{background:none;border:none;color:var(--muted);cursor:pointer;font-size:12px;padding:3px 6px;border-radius:5px;}
+.del:hover{background:rgba(255,61,94,0.15);color:var(--red);}
+.edit-btn{background:none;border:none;color:var(--muted);cursor:pointer;font-size:12px;padding:3px 6px;border-radius:5px;margin-right:2px;}
+.edit-btn:hover{background:rgba(0,200,240,0.12);color:var(--accent);}
+.qc-btn{background:rgba(0,223,160,0.1);border:1px solid rgba(0,223,160,0.3);color:var(--green);
+  cursor:pointer;font-size:0.72rem;font-weight:700;padding:3px 9px;border-radius:5px;
+  font-family:var(--font);margin-right:4px;white-space:nowrap;transition:all 0.18s;}
+.qc-btn:hover{background:rgba(0,223,160,0.22);border-color:var(--green);}
+.sell-btn{background:rgba(0,200,240,0.1);border:1px solid rgba(0,200,240,0.3);color:var(--accent);
+  cursor:pointer;font-size:0.72rem;font-weight:700;padding:3px 9px;border-radius:5px;
+  font-family:var(--font);margin-right:4px;white-space:nowrap;transition:all 0.18s;}
+.sell-btn:hover{background:rgba(0,200,240,0.2);}
+.divider{font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;
+  font-family:var(--font-mono);padding:4px 0;grid-column:1/-1;border-bottom:1px solid var(--border);margin-bottom:2px;}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">
+    <h1>// OPTIONS_TRACKER</h1>
+    <span id="goal-label">SGD — → — Goal</span>
+  </div>
+  <div class="header-right">
+    <!-- FX Rate pill -->
+    <div class="fx-pill" title="USD/SGD exchange rate — edit to update">
+      <span>USD/SGD</span>
+      <input id="fx-rate" type="number" step="0.001" min="1" max="2" title="Edit exchange rate">
+      <span style="color:var(--muted);font-size:0.65rem">live rate</span>
+    </div>
+    <div class="sync-badge">
+      <div class="sdot" id="sdot"></div>
+      <span id="stxt">Not connected</span>
+    </div>
+    <div class="hdr-bal">
+      <div class="lbl">Balance (SGD)</div>
+      <div class="val" id="hdr-bal">SGD —</div>
+    </div>
+  </div>
+</header>
+
+<!-- P&L BANNER -->
+<div class="pnl-banner">
+  <div class="pnl-cell">
+    <div class="lbl">Starting Capital</div>
+    <div class="val cb" id="b-start">—</div>
+    <div class="sub" id="b-start-sub">your base (SGD)</div>
+  </div>
+  <div class="pnl-cell">
+    <div class="lbl">Total Cost Basis</div>
+    <div class="val cy" id="b-cost">—</div>
+    <div class="sub">all premiums → SGD</div>
+  </div>
+  <div class="pnl-cell">
+    <div class="lbl">Total Proceeds</div>
+    <div class="val cp" id="b-proceeds">—</div>
+    <div class="sub">closed trades → SGD</div>
+  </div>
+  <div class="pnl-cell">
+    <div class="lbl">Overall P&L</div>
+    <div class="val" id="b-pnl">—</div>
+    <div class="sub" id="b-pnl-sub">realised in SGD</div>
+  </div>
+  <div class="pnl-cell">
+    <div class="lbl">Top-Ups (SGD)</div>
+    <div class="val co" id="b-topups">—</div>
+    <div class="sub">additional deposits</div>
+  </div>
+  <div class="pnl-cell">
+    <div class="lbl">Unrealised Exposure</div>
+    <div class="val cy" id="b-open-cost">—</div>
+    <div class="sub">open positions → SGD</div>
+  </div>
+</div>
+
+<!-- PROGRESS -->
+<div class="prog-wrap">
+  <div class="prog-labels">
+    <span id="prog-start">SGD —</span>
+    <span class="mid" id="prog-pct">0.0% to goal</span>
+    <span id="prog-goal">SGD —</span>
+  </div>
+  <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <button class="active" onclick="goNav('dashboard',this)">📊 Dashboard</button>
+  <button onclick="goNav('trades',this)">📋 Trade Log</button>
+  <button onclick="goNav('add',this)">➕ Add Trade</button>
+  <button onclick="goNav('risk',this)">⚠️ Risk</button>
+  <button onclick="goNav('stocks',this)">📦 Assignments</button>
+  <button onclick="goNav('settings',this)">⚙️ Settings</button>
+  <button class="btn-csv" onclick="exportCSV()">⬇ Export CSV</button>
+</nav>
+
+<!-- DASHBOARD -->
+<div id="pg-dashboard" class="page active">
+  <div class="stats-grid" id="stats-grid"></div>
+  <div class="charts-row">
+    <div class="ccrd"><h3>Account Growth (SGD)</h3><canvas id="cGrowth" height="130"></canvas></div>
+    <div class="ccrd"><h3>Win / Loss</h3><canvas id="cWin" height="130"></canvas></div>
+  </div>
+  <div class="charts-row">
+    <div class="ccrd"><h3>Monthly P&L (SGD)</h3><canvas id="cMonthly" height="110"></canvas></div>
+    <div class="ccrd"><h3>Market Split</h3><canvas id="cDist" height="110"></canvas></div>
+  </div>
+</div>
+
+<!-- TRADE LOG -->
+<div id="pg-trades" class="page">
+  <div class="tcrd"><div class="twrap" id="trade-table"></div></div>
+</div>
+
+<!-- ADD TRADE -->
+<div id="pg-add" class="page">
+  <div class="fcrd">
+    <h3>➕ Log New Trade</h3>
+    <div style="background:rgba(255,140,66,0.07);border:1px solid rgba(255,140,66,0.2);border-radius:9px;padding:11px 16px;margin-bottom:18px;font-size:0.81rem;color:var(--muted);line-height:1.6">
+      💱 Select the <strong style="color:var(--orange)">currency</strong> your premium was paid in. All amounts are auto-converted to SGD using the rate in the header. You can log USD and SGD trades side by side.
+    </div>
+    <div class="fgrid">
+      <div class="fg"><label>Market</label>
+        <select id="fm"><option value="US">🇺🇸 US Stocks</option><option value="SG">🇸🇬 SGX</option></select></div>
+      <div class="fg"><label>Symbol</label>
+        <input id="fsym" type="text" placeholder="SPY, QQQ, D05.SI"></div>
+      <div class="fg"><label>Option Type</label>
+        <select id="ftype"><option>CALL</option><option>PUT</option></select></div>
+      <div class="fg"><label>Currency</label>
+        <select id="fccy" onchange="updateCcyHints()">
+          <option value="SGD">SGD (Singapore Dollar)</option>
+          <option value="USD">USD (US Dollar)</option>
+        </select></div>
+      <div class="fg"><label>Strategy</label>
+        <select id="fstrat">
+          <optgroup label="── Single Leg ──">
+            <option>Long Call</option><option>Long Put</option>
+            <option>Covered Call</option><option>Cash-Secured Put</option>
+            <option>Naked Call</option><option>Naked Put</option>
+          </optgroup>
+          <optgroup label="── Vertical Spreads ──">
+            <option>Bull Call Spread</option><option>Bear Call Spread</option>
+            <option>Bull Put Spread</option><option>Bear Put Spread</option>
+          </optgroup>
+          <optgroup label="── Multi-Leg ──">
+            <option>Iron Condor</option><option>Iron Butterfly</option>
+            <option>Straddle</option><option>Strangle</option>
+            <option>Jade Lizard</option><option>Ratio Spread</option><option>Collar</option>
+          </optgroup>
+          <optgroup label="── Calendar / Diagonal ──">
+            <option>Calendar Spread</option><option>Diagonal Spread</option>
+            <option>PMCC (Poor Man's Covered Call)</option>
+          </optgroup>
+          <optgroup label="── Other ──"><option>Other</option></optgroup>
+        </select></div>
+      <div class="fg"><label>Strike Price</label>
+        <input id="fstrike" type="number" placeholder="e.g. 480">
+        <div class="ccy-note" id="strike-ccy-note">SGD</div></div>
+      <div class="fg"><label>Expiry Date</label><input id="fexpiry" type="date"></div>
+      <div class="fg"><label>Contracts</label><input id="fcontracts" type="number" value="1" min="1"></div>
+      <div class="fg"><label>Premium Paid</label>
+        <input id="fpremium" type="number" placeholder="e.g. 650" oninput="updateCcyHints()">
+        <div class="ccy-note" id="premium-ccy-note">SGD — cost basis</div></div>
+      <div class="fg"><label>Open Date</label><input id="fopendate" type="date"></div>
+      <div class="fg"><label>Close Date</label><input id="fclosedate" type="date"></div>
+      <div class="fg"><label>Close Proceeds</label>
+        <input id="fcloseamt" type="number" placeholder="0 = expired worthless" oninput="updateCcyHints()">
+        <div class="ccy-note" id="proceeds-ccy-note">SGD</div></div>
+      <div class="fg"><label>Status</label>
+        <select id="fstatus"><option>Open</option><option>Closed</option><option>Expired</option></select></div>
+      <div class="fg"><label>Max Risk</label>
+        <input id="frisk" type="number" placeholder="e.g. 650">
+        <div class="ccy-note" id="risk-ccy-note">SGD</div></div>
+      <div class="fg" style="grid-column:span 2"><label>Notes / Thesis</label>
+        <input id="fnotes" type="text" placeholder="Why you took this trade..."></div>
+    </div>
+    <!-- SGD equivalent preview -->
+    <div id="sgd-preview" style="display:none;background:rgba(255,140,66,0.07);border:1px solid rgba(255,140,66,0.2);border-radius:9px;padding:12px 16px;margin-top:14px;font-size:0.82rem;color:var(--muted);line-height:1.9">
+      <strong style="color:var(--orange)">💱 SGD Equivalent (at current rate):</strong><br>
+      Premium: <span id="prev-premium" style="color:var(--text);font-family:var(--font-mono)">—</span> &nbsp;·&nbsp;
+      Proceeds: <span id="prev-proceeds" style="color:var(--text);font-family:var(--font-mono)">—</span> &nbsp;·&nbsp;
+      P&L: <span id="prev-pnl" style="font-family:var(--font-mono);font-weight:700">—</span>
+    </div>
+    <div class="factions">
+      <button class="btn btn-p" onclick="saveTrade()">Save Trade</button>
+      <button class="btn btn-g" onclick="clearForm()">Clear</button>
+    </div>
+  </div>
+</div>
+
+<!-- RISK -->
+<div id="pg-risk" class="page">
+  <div class="rgrid" id="risk-grid"></div>
+  <div class="fcrd">
+    <h3>Risk Settings</h3>
+    <div class="fgrid">
+      <div class="fg"><label>Max Risk Per Trade (%)</label>
+        <input id="rmaxpt" type="number" value="2" min="0.5" max="20" step="0.5" oninput="renderRisk()">
+        <div class="hint">Recommended: 1–3%</div></div>
+      <div class="fg"><label>Max Portfolio Risk (%)</label>
+        <input id="rmaxpf" type="number" value="15" min="5" max="50" step="1" oninput="renderRisk()">
+        <div class="hint">Recommended: 10–20%</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ASSIGNMENTS -->
+<div id="pg-stocks" class="page">
+  <div class="assign-banner" id="assign-banner"></div>
+  <div class="fcrd">
+    <h3>📦 Log Assignment / Stock Position</h3>
+    <div style="background:rgba(255,201,68,0.07);border:1px solid rgba(255,201,68,0.2);border-radius:9px;padding:12px 16px;margin-bottom:18px;font-size:0.81rem;color:var(--muted);line-height:1.7">
+      Use this when an option is <strong style="color:var(--yellow)">assigned</strong> and you now hold shares. Select the currency your shares are priced in.
+    </div>
+    <div class="fgrid">
+      <div class="fg"><label>Market</label>
+        <select id="sm"><option value="US">🇺🇸 US Stocks</option><option value="SG">🇸🇬 SGX</option></select></div>
+      <div class="fg"><label>Symbol</label><input id="ssym" type="text" placeholder="e.g. SPY, D05.SI"></div>
+      <div class="fg"><label>Currency</label>
+        <select id="sccy"><option value="SGD">SGD</option><option value="USD">USD</option></select></div>
+      <div class="fg"><label>Assignment Type</label>
+        <select id="satype">
+          <option value="Shares Received">Shares Received (Put assigned)</option>
+          <option value="Shares Called Away">Shares Called Away (Call assigned)</option>
+          <option value="Call Exercised">Call Exercised (bought shares)</option>
+          <option value="Put Exercised">Put Exercised (sold shares)</option>
+        </select></div>
+      <div class="fg"><label>Shares / Lots</label><input id="sshares" type="number" placeholder="e.g. 100"></div>
+      <div class="fg"><label>Assigned Price (per share)</label>
+        <input id="sstrike" type="number" placeholder="e.g. 480">
+        <div class="hint">Strike price in selected currency</div></div>
+      <div class="fg"><label>Total Cost Basis</label>
+        <input id="scost" type="number" placeholder="auto-calc below"></div>
+      <div class="fg"><label>Assignment Date</label><input id="sadate" type="date"></div>
+      <div class="fg"><label>Current Price (per share)</label>
+        <input id="scurrent" type="number" placeholder="update anytime" oninput="previewStockPnl()"></div>
+      <div class="fg"><label>Sell Date</label><input id="sselldate" type="date"></div>
+      <div class="fg"><label>Sell Price (per share)</label>
+        <input id="ssellprice" type="number" placeholder="leave blank if holding" oninput="previewStockPnl()"></div>
+      <div class="fg"><label>Status</label>
+        <select id="sstatus"><option>Holding</option><option>Sold</option></select></div>
+      <div class="fg"><label>Linked Option</label>
+        <select id="slinked"><option value="">— None —</option></select></div>
+      <div class="fg" style="grid-column:span 2"><label>Notes</label>
+        <input id="snotes" type="text" placeholder="e.g. Plan to sell covered calls on assigned shares"></div>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;align-items:center">
+      <button class="btn btn-g" onclick="autoCalcCost()" style="font-size:0.8rem;padding:7px 14px">⚡ Auto-calc Cost Basis</button>
+      <div id="stock-pnl-preview" style="font-family:var(--font-mono);font-size:0.88rem;display:none"></div>
+    </div>
+    <div class="factions" style="margin-top:14px">
+      <button class="btn btn-p" onclick="saveStock()">Save Position</button>
+      <button class="btn btn-g" onclick="clearStockForm()">Clear</button>
+    </div>
+  </div>
+  <div class="tcrd"><div class="twrap" id="stock-table"></div></div>
+</div>
+
+<!-- SETTINGS -->
+<div id="pg-settings" class="page">
+
+  <!-- Capital + FX -->
+  <div class="cap-banner">
+    <div class="cap-field">
+      <div class="lbl">Starting Capital (SGD)</div>
+      <input id="cap-input" type="number" placeholder="40000" oninput="updateCapital()">
+    </div>
+    <div class="cap-field">
+      <div class="lbl">Goal Amount (SGD)</div>
+      <input id="goal-input" type="number" placeholder="300000" oninput="updateCapital()">
+    </div>
+    <div class="cap-field">
+      <div class="lbl">USD/SGD Rate</div>
+      <input id="fx-rate-settings" type="number" step="0.001" placeholder="1.350" oninput="updateFxFromSettings()">
+      <div class="hint">Used to convert all USD trades to SGD</div>
+    </div>
+    <div class="cap-info">
+      All USD premiums and proceeds are multiplied by this rate.<br>
+      Update it whenever the rate changes significantly.<br>
+      <strong>Current:</strong> <span id="cap-display">—</span>
+    </div>
+  </div>
+
+  <!-- Top-up Logger -->
+  <div class="fcrd">
+    <h3>💰 Capital Top-Ups (SGD Deposits)</h3>
+    <p style="font-size:0.82rem;color:var(--muted);margin-bottom:16px;line-height:1.6">
+      Record every time you add fresh SGD to your account. This keeps your starting balance accurate so P&L reflects only trading gains, not deposits.
+    </p>
+    <div class="topup-row">
+      <div class="fg"><label>Date</label><input id="tu-date" type="date"></div>
+      <div class="fg"><label>Amount (SGD)</label><input id="tu-amount" type="number" placeholder="e.g. 5000"></div>
+      <div class="fg"><label>Notes</label><input id="tu-notes" type="text" placeholder="e.g. Monthly top-up" style="width:220px"></div>
+      <button class="btn btn-p" style="align-self:flex-end" onclick="addTopup()">Add Top-Up</button>
+    </div>
+    <div class="topup-history" id="topup-history"></div>
+  </div>
+
+  <!-- Google Sheets -->
+  <div class="setup-banner">
+    <h3>🔗 Google Sheets Auto-Sync</h3>
+    <p>Paste your Google Apps Script Web App URL. Every trade saves automatically to your Sheet.</p>
+    <input id="script-url" type="text" placeholder="https://script.google.com/macros/s/YOUR_ID/exec" oninput="saveScriptUrl()">
+    <div class="setup-row">
+      <button class="btn btn-p" onclick="testConn()">Test Connection</button>
+      <button class="btn btn-g" onclick="syncAll()">Sync All Trades Now</button>
+      <span id="conn-res" style="font-size:0.78rem;color:var(--muted)"></span>
+    </div>
+  </div>
+
+  <!-- Setup guide -->
+  <div class="fcrd">
+    <h3>📋 Google Sheets Setup (5 minutes)</h3>
+    <div style="line-height:1.9;font-size:0.84rem;color:var(--muted)">
+      <p><strong style="color:var(--accent);font-family:var(--font-mono)">STEP 1</strong> — Open <a href="https://sheets.google.com" target="_blank" style="color:var(--accent)">Google Sheets</a>, create a new spreadsheet named <strong style="color:var(--text)">"Options Tracker"</strong>.</p><br>
+      <p><strong style="color:var(--accent);font-family:var(--font-mono)">STEP 2</strong> — Click <strong style="color:var(--text)">Extensions → Apps Script</strong>.</p><br>
+      <p><strong style="color:var(--accent);font-family:var(--font-mono)">STEP 3</strong> — Delete all existing code, paste the <strong style="color:var(--text)">google_apps_script.js</strong> file contents, save.</p><br>
+      <p><strong style="color:var(--accent);font-family:var(--font-mono)">STEP 4</strong> — Click <strong style="color:var(--text)">Deploy → New Deployment</strong>. Type = Web App, Access = Anyone. Copy the URL.</p><br>
+      <p><strong style="color:var(--accent);font-family:var(--font-mono)">STEP 5</strong> — Paste URL above, click Test Connection.</p><br>
+      <p><strong style="color:var(--accent);font-family:var(--font-mono)">STEP 6</strong> — Upload this HTML to Google Drive. Open in Chrome from any device.</p><br>
+      <p style="color:var(--yellow)">⚠️ Google may ask to authorise the script — click Allow.</p>
+    </div>
+  </div>
+
+  <!-- Backup -->
+  <div class="fcrd">
+    <h3>💾 Manual Backup</h3>
+    <p style="font-size:0.83rem;color:var(--muted);margin-bottom:14px">Download all trades as CSV or re-import from a backup.</p>
+    <div class="factions">
+      <button class="btn btn-p" onclick="exportCSV()">⬇ Export CSV</button>
+      <button class="btn btn-g" onclick="document.getElementById('imp').click()">⬆ Import CSV</button>
+      <input type="file" id="imp" accept=".csv" style="display:none" onchange="importCSV(event)">
+    </div>
+  </div>
+</div>
+
+<!-- EDIT MODAL -->
+<div class="overlay" id="edit-modal">
+  <div class="modal">
+    <h3>✏️ Edit Trade</h3>
+    <div class="fgrid" id="edit-grid"></div>
+    <div class="modal-btns">
+      <button class="btn btn-p" onclick="saveEdit()">Save Changes</button>
+      <button class="btn btn-g" onclick="closeModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- QUICK CLOSE MODAL -->
+<div class="overlay" id="qc-modal">
+  <div class="modal" style="max-width:430px">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+      <div style="width:36px;height:36px;border-radius:50%;background:rgba(0,223,160,0.12);display:flex;align-items:center;justify-content:center;font-size:1.1rem">⚡</div>
+      <div>
+        <h3 style="margin:0;font-size:0.95rem">Quick Close</h3>
+        <div id="qc-subtitle" style="font-size:0.72rem;color:var(--muted);font-family:var(--font-mono)"></div>
+      </div>
+    </div>
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:9px;padding:14px;margin:16px 0;font-size:0.8rem;color:var(--muted);line-height:1.8">
+      Cost basis: <span id="qc-cost" style="color:var(--yellow);font-family:var(--font-mono);font-weight:700"></span>
+      <span id="qc-ccy-badge" style="margin-left:5px"></span><br>
+      Opened: <span id="qc-opened" style="color:var(--text)"></span> &nbsp;·&nbsp; Expiry: <span id="qc-expiry" style="color:var(--text)"></span>
+    </div>
+    <div style="display:grid;gap:12px">
+      <div class="fg"><label>Close Date</label><input id="qc-date" type="date"></div>
+      <div class="fg">
+        <label>Close Proceeds <span id="qc-proceeds-lbl" style="color:var(--orange);font-family:var(--font-mono);font-size:0.7rem"></span></label>
+        <input id="qc-proceeds" type="number" placeholder="e.g. 820 — enter 0 if expired worthless">
+      </div>
+      <div class="fg"><label>Outcome</label>
+        <select id="qc-status">
+          <option value="Closed">Closed (sold to close)</option>
+          <option value="Expired">Expired worthless</option>
+        </select>
+      </div>
+      <div id="qc-pnl-preview" style="background:var(--surface2);border:1px solid var(--border);border-radius:9px;padding:13px;text-align:center;display:none">
+        <div style="font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:5px;font-family:var(--font-mono)">P&L Preview</div>
+        <div id="qc-pnl-orig" style="font-family:var(--font-mono);font-size:1rem;font-weight:700"></div>
+        <div id="qc-pnl-sgd" style="font-size:0.75rem;color:var(--muted);margin-top:3px"></div>
+      </div>
+    </div>
+    <div class="modal-btns" style="margin-top:16px">
+      <button class="btn btn-p" onclick="saveQuickClose()" style="flex:1">⚡ Close Trade</button>
+      <button class="btn btn-g" onclick="closeQCModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── STATE ────────────────────────────────────────────────
+let CFG = JSON.parse(localStorage.getItem('opt_cfg_v2') || 'null') || { start:40000, goal:300000, fx:1.35 };
+let trades = JSON.parse(localStorage.getItem('opt_sgd_v4') || 'null') || [
+  { id:1, market:'US', symbol:'SPY', type:'CALL', strategy:'Long Call', strike:'490', expiry:'2026-03-21', contracts:'1', premium:'620', currency:'USD', open_date:'2026-01-15', close_date:'2026-02-01', close_price:'980', status:'Closed', risk:'620', notes:'SAMPLE USD trade — delete me' },
+  { id:2, market:'SG', symbol:'D05.SI', type:'PUT', strategy:'Long Put', strike:'32', expiry:'2026-04-18', contracts:'2', premium:'280', currency:'SGD', open_date:'2026-02-10', close_date:'', close_price:'', status:'Open', risk:'280', notes:'DBS hedge — SGD trade, SAMPLE' }
+];
+let stocks = JSON.parse(localStorage.getItem('opt_stocks_v2') || '[]');
+let topups = JSON.parse(localStorage.getItem('opt_topups_v1') || '[]');
+let chs = {}, editId = null, qcId = null;
+let scriptUrl = localStorage.getItem('opt_script_url') || '';
+
+// Init inputs
+document.getElementById('cap-input').value = CFG.start;
+document.getElementById('goal-input').value = CFG.goal;
+document.getElementById('fx-rate').value = CFG.fx;
+document.getElementById('fx-rate-settings').value = CFG.fx;
+if (scriptUrl) { document.getElementById('script-url').value = scriptUrl; setSyncStatus('ok','Connected'); }
+
+// ── UTILS ────────────────────────────────────────────────
+const saveAll = () => {
+  localStorage.setItem('opt_sgd_v4', JSON.stringify(trades));
+  localStorage.setItem('opt_stocks_v2', JSON.stringify(stocks));
+  localStorage.setItem('opt_topups_v1', JSON.stringify(topups));
+  localStorage.setItem('opt_cfg_v2', JSON.stringify(CFG));
+};
+const fmt = n => Number(n||0).toLocaleString('en-SG',{minimumFractionDigits:0,maximumFractionDigits:0});
+const fmt2 = n => Number(n||0).toLocaleString('en-SG',{minimumFractionDigits:2,maximumFractionDigits:2});
+const fmtSGD = n => 'S$'+fmt(n);
+const fmtUSD = n => 'US$'+fmt2(n);
+
+// Convert any amount to SGD
+function toSGD(amount, currency) {
+  const a = Number(amount) || 0;
+  return currency === 'USD' ? a * CFG.fx : a;
+}
+
+// P&L of a trade in SGD
+function pnl(t) {
+  if (t.status === 'Open') return 0;
+  const ccy = t.currency || 'SGD';
+  const cost = toSGD(t.premium, ccy);
+  const proceeds = toSGD(t.close_price, ccy);
+  return proceeds - cost;
+}
+
+function toast(msg, type='ok') {
+  const el = document.getElementById('toast');
+  el.textContent = (type==='ok'?'✅ ':'❌ ') + msg;
+  el.className = `toast show t${type}`;
+  setTimeout(()=>el.className='toast', 3200);
+}
+function setSyncStatus(state, text) {
+  document.getElementById('sdot').className = 'sdot '+(state==='ok'?'ok':state==='err'?'err':'pulse');
+  document.getElementById('stxt').textContent = text;
+}
+
+// ── FX RATE ──────────────────────────────────────────────
+document.getElementById('fx-rate').addEventListener('input', function() {
+  CFG.fx = Number(this.value) || 1.35;
+  document.getElementById('fx-rate-settings').value = CFG.fx;
+  saveAll(); updateAll();
+});
+function updateFxFromSettings() {
+  CFG.fx = Number(document.getElementById('fx-rate-settings').value) || 1.35;
+  document.getElementById('fx-rate').value = CFG.fx;
+  saveAll(); updateAll();
+}
+
+// ── CURRENCY HINTS in Add Trade form ─────────────────────
+function updateCcyHints() {
+  const ccy = document.getElementById('fccy').value;
+  const isUSD = ccy === 'USD';
+  const suffix = isUSD ? 'USD' : 'SGD';
+  const cls = isUSD ? 'ccy-usd' : 'ccy-sgd';
+
+  ['strike-ccy-note','risk-ccy-note'].forEach(id => {
+    document.getElementById(id).textContent = suffix;
+    document.getElementById(id).className = `ccy-note ${cls}`;
+  });
+
+  const premium = Number(document.getElementById('fpremium').value) || 0;
+  const proceeds = Number(document.getElementById('fcloseamt').value) || 0;
+
+  document.getElementById('premium-ccy-note').textContent = isUSD
+    ? `USD → ${fmtSGD(toSGD(premium,'USD'))} SGD`
+    : 'SGD — cost basis';
+  document.getElementById('premium-ccy-note').className = `ccy-note ${cls}`;
+
+  document.getElementById('proceeds-ccy-note').textContent = isUSD
+    ? `USD → ${fmtSGD(toSGD(proceeds,'USD'))} SGD`
+    : 'SGD';
+  document.getElementById('proceeds-ccy-note').className = `ccy-note ${cls}`;
+
+  const preview = document.getElementById('sgd-preview');
+  if (isUSD && (premium || proceeds)) {
+    preview.style.display = 'block';
+    const premSGD = toSGD(premium, 'USD');
+    const procSGD = toSGD(proceeds, 'USD');
+    const p = procSGD - premSGD;
+    document.getElementById('prev-premium').textContent = `${fmtUSD(premium)} = ${fmtSGD(premSGD)}`;
+    document.getElementById('prev-proceeds').textContent = proceeds ? `${fmtUSD(proceeds)} = ${fmtSGD(procSGD)}` : '—';
+    const pEl = document.getElementById('prev-pnl');
+    if (proceeds) {
+      pEl.textContent = (p>=0?'+':'')+fmtSGD(p);
+      pEl.style.color = p>=0?'var(--green)':'var(--red)';
+    } else { pEl.textContent = '—'; pEl.style.color = 'var(--muted)'; }
+  } else {
+    preview.style.display = 'none';
+  }
+}
+
+// ── CAPITAL & TOP-UPS ─────────────────────────────────────
+function updateCapital() {
+  CFG.start = Number(document.getElementById('cap-input').value) || 40000;
+  CFG.goal = Number(document.getElementById('goal-input').value) || 300000;
+  saveAll(); updateAll();
+}
+
+function totalTopups() { return topups.reduce((s,t)=>s+(Number(t.amount)||0),0); }
+
+function addTopup() {
+  const date = document.getElementById('tu-date').value;
+  const amount = document.getElementById('tu-amount').value;
+  const notes = document.getElementById('tu-notes').value;
+  if (!amount || !date) { toast('Date and amount are required','err'); return; }
+  topups.push({ id:Date.now(), date, amount, notes });
+  saveAll(); renderTopupHistory(); updateAll();
+  document.getElementById('tu-date').value='';
+  document.getElementById('tu-amount').value='';
+  document.getElementById('tu-notes').value='';
+  toast('Top-up recorded!');
+}
+
+function delTopup(idx) {
+  if (!confirm('Remove this top-up?')) return;
+  topups.splice(idx,1); saveAll(); renderTopupHistory(); updateAll();
+}
+
+function renderTopupHistory() {
+  const el = document.getElementById('topup-history');
+  if (!topups.length) { el.innerHTML='<p style="font-size:0.8rem;color:var(--muted)">No top-ups recorded yet.</p>'; return; }
+  el.innerHTML = [...topups].reverse().map((t,ri)=>{
+    const idx = topups.length-1-ri;
+    return `<div class="topup-item">
+      <span style="color:var(--muted);font-size:0.75rem">${t.date}</span>
+      <span class="mono" style="color:var(--orange);font-weight:700">+${fmtSGD(t.amount)}</span>
+      <span style="color:var(--muted);font-size:0.77rem">${t.notes||''}</span>
+      <button class="del" onclick="delTopup(${idx})">✕</button>
+    </div>`;
+  }).join('');
+}
+
+// ── STATS ────────────────────────────────────────────────
+function calcStats() {
+  const closed = trades.filter(t=>t.status!=='Open');
+  const wins = closed.filter(t=>pnl(t)>0);
+  const losses = closed.filter(t=>pnl(t)<=0);
+  const totalPnl = closed.reduce((s,t)=>s+pnl(t),0);
+  const tu = totalTopups();
+  const balance = CFG.start + tu + totalPnl;
+  const winRate = closed.length?wins.length/closed.length*100:0;
+  const avgWin = wins.length?wins.reduce((s,t)=>s+pnl(t),0)/wins.length:0;
+  const avgLoss = losses.length?losses.reduce((s,t)=>s+pnl(t),0)/losses.length:0;
+  const pf = Math.abs(avgLoss)>0?Math.abs(avgWin/avgLoss):0;
+  // Open risk in SGD
+  const openRisk = trades.filter(t=>t.status==='Open').reduce((s,t)=>s+toSGD(t.risk||t.premium,t.currency||'SGD'),0);
+  // Cost basis — all premiums in SGD
+  const totalCostBasis = trades.reduce((s,t)=>s+toSGD(t.premium,t.currency||'SGD'),0);
+  const totalProceeds = closed.reduce((s,t)=>s+toSGD(t.close_price,t.currency||'SGD'),0);
+  const openCost = trades.filter(t=>t.status==='Open').reduce((s,t)=>s+toSGD(t.premium,t.currency||'SGD'),0);
+  return { closed,wins,losses,totalPnl,balance,winRate,avgWin,avgLoss,profitFactor:pf,
+    openRisk,totalCostBasis,totalProceeds,openCost,topups:tu };
+}
+
+// ── UPDATE ALL UI ─────────────────────────────────────────
+function updateAll() {
+  const s = calcStats();
+  const pct = Math.max(0,Math.min(((s.balance-CFG.start)/(CFG.goal-CFG.start))*100,100));
+
+  document.getElementById('hdr-bal').textContent = fmtSGD(s.balance);
+  document.getElementById('goal-label').textContent = `${fmtSGD(CFG.start)} → ${fmtSGD(CFG.goal)} Goal`;
+  document.getElementById('prog-fill').style.width = pct+'%';
+  document.getElementById('prog-pct').textContent = pct.toFixed(1)+'% to goal';
+  document.getElementById('prog-start').textContent = fmtSGD(CFG.start);
+  document.getElementById('prog-goal').textContent = fmtSGD(CFG.goal);
+  document.getElementById('cap-display').textContent = `${fmtSGD(CFG.start)} → ${fmtSGD(CFG.goal)} · FX: 1 USD = ${CFG.fx} SGD`;
+
+  document.getElementById('b-start').textContent = fmtSGD(CFG.start);
+  document.getElementById('b-start-sub').textContent = `goal: ${fmtSGD(CFG.goal)}`;
+  document.getElementById('b-cost').textContent = fmtSGD(s.totalCostBasis);
+  document.getElementById('b-proceeds').textContent = fmtSGD(s.totalProceeds);
+  document.getElementById('b-topups').textContent = fmtSGD(s.topups);
+
+  const pnlEl = document.getElementById('b-pnl');
+  pnlEl.textContent = (s.totalPnl>=0?'+':'')+fmtSGD(s.totalPnl);
+  pnlEl.style.color = s.totalPnl>=0?'var(--green)':'var(--red)';
+  document.getElementById('b-pnl-sub').textContent = s.totalPnl>=0
+    ? `+${((s.totalPnl/CFG.start)*100).toFixed(1)}% return on capital`
+    : `${((s.totalPnl/CFG.start)*100).toFixed(1)}% drawdown`;
+  document.getElementById('b-open-cost').textContent = fmtSGD(s.openCost);
+}
+
+// ── NAV ──────────────────────────────────────────────────
+function goNav(id, btn) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('nav button:not(.btn-csv)').forEach(b=>b.classList.remove('active'));
+  document.getElementById('pg-'+id).classList.add('active');
+  btn.classList.add('active');
+  if(id==='dashboard') renderDash();
+  if(id==='trades') renderTrades();
+  if(id==='risk') renderRisk();
+  if(id==='stocks') renderAssignments();
+  if(id==='settings') renderTopupHistory();
+  updateAll();
+}
+
+// ── DASHBOARD ────────────────────────────────────────────
+function renderDash() {
+  const s = calcStats();
+  const pct = Math.max(0,Math.min(((s.balance-CFG.start)/(CFG.goal-CFG.start))*100,100));
+  const usTrades = trades.filter(t=>t.currency==='USD').length;
+  const cards = [
+    {lbl:'Account Balance (SGD)',val:fmtSGD(s.balance),sub:(s.totalPnl>=0?'+':'')+fmtSGD(s.totalPnl)+' P&L + '+fmtSGD(s.topups)+' top-ups',cls:s.totalPnl>=0?'cg':'cr'},
+    {lbl:'Win Rate',val:s.winRate.toFixed(1)+'%',sub:s.wins.length+'W / '+s.losses.length+'L ('+s.closed.length+' closed)',cls:s.winRate>=50?'cg':'cr'},
+    {lbl:'Avg Win (SGD)',val:fmtSGD(s.avgWin),sub:'per winning trade',cls:'cg'},
+    {lbl:'Avg Loss (SGD)',val:fmtSGD(Math.abs(s.avgLoss)),sub:'per losing trade',cls:'cr'},
+    {lbl:'Profit Factor',val:s.profitFactor>0?s.profitFactor.toFixed(2)+'x':'N/A',sub:'> 1.5x is strong',cls:s.profitFactor>=1.5?'cg':s.profitFactor>=1?'cy':'cr'},
+    {lbl:'Cost Basis (SGD)',val:fmtSGD(s.totalCostBasis),sub:'all premiums converted',cls:'cy'},
+    {lbl:'Total Proceeds (SGD)',val:fmtSGD(s.totalProceeds),sub:'from closed trades',cls:'cp'},
+    {lbl:'USD Trades',val:usTrades,sub:`at 1 USD = ${CFG.fx} SGD`,cls:'co'},
+    {lbl:'Open Risk (SGD)',val:fmtSGD(s.openRisk),sub:'max capital at risk',cls:s.openRisk/s.balance>0.15?'cr':'cy'},
+    {lbl:'Goal Progress',val:pct.toFixed(1)+'%',sub:fmtSGD(Math.max(CFG.goal-s.balance,0))+' remaining',cls:'cb'},
+  ];
+  document.getElementById('stats-grid').innerHTML = cards.map(c=>`
+    <div class="scard"><div class="lbl">${c.lbl}</div>
+    <div class="val ${c.cls}">${c.val}</div>
+    <div class="sub">${c.sub}</div></div>`).join('');
+  renderCharts(s);
+}
+
+// ── CHARTS ───────────────────────────────────────────────
+function dch(id){if(chs[id]){chs[id].destroy();delete chs[id];}}
+const dkO=(yFmt)=>({responsive:true,
+  plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>(yFmt?'S$':'')+Number(ctx.raw).toLocaleString()}}},
+  scales:{x:{ticks:{color:'#4e6a88',font:{size:10}},grid:{color:'#1c2d47'}},
+    y:{ticks:{color:'#4e6a88',font:{size:10},callback:v=>yFmt?'S$'+v.toLocaleString():v},grid:{color:'#1c2d47'}}}});
+
+function renderCharts(s) {
+  let run=CFG.start;
+  const pts=[{x:'Start',y:CFG.start}];
+  [...trades].filter(t=>t.status!=='Open'&&t.close_date).sort((a,b)=>new Date(a.close_date)-new Date(b.close_date)).forEach(t=>{run+=pnl(t);pts.push({x:t.close_date,y:Math.round(run)});});
+
+  dch('g');
+  chs.g=new Chart(document.getElementById('cGrowth'),{type:'line',data:{labels:pts.map(p=>p.x),datasets:[
+    {label:'Balance',data:pts.map(p=>p.y),borderColor:'#00c8f0',backgroundColor:'rgba(0,200,240,0.07)',fill:true,tension:0.35,pointRadius:5,pointBackgroundColor:'#00c8f0'},
+    {label:'Goal',data:pts.map(()=>CFG.goal),borderColor:'#00dfa0',borderDash:[7,5],pointRadius:0,fill:false}
+  ]},options:{...dkO(true),plugins:{legend:{display:true,labels:{color:'#4e6a88',font:{size:11}}}}}});
+
+  dch('w');
+  chs.w=new Chart(document.getElementById('cWin'),{type:'doughnut',data:{labels:['Wins','Losses'],datasets:[{data:[Math.max(s.wins.length,0.01),s.losses.length],backgroundColor:['#00dfa0','#ff3d5e'],borderWidth:0}]},options:{responsive:true,cutout:'62%',plugins:{legend:{display:true,labels:{color:'#4e6a88',font:{size:11}}}}}});
+
+  const mo={};
+  trades.filter(t=>t.status!=='Open'&&t.close_date).forEach(t=>{const m=t.close_date.slice(0,7);mo[m]=(mo[m]||0)+pnl(t);});
+  const mos=Object.keys(mo).sort();
+  dch('m');
+  chs.m=new Chart(document.getElementById('cMonthly'),{type:'bar',data:{labels:mos.length?mos:['No data'],datasets:[{data:mos.length?mos.map(m=>mo[m]):[0],backgroundColor:mos.map(m=>mo[m]>=0?'rgba(0,223,160,0.75)':'rgba(255,61,94,0.75)'),borderRadius:6}]},options:dkO(true)});
+
+  const us=trades.filter(t=>t.market==='US').length,sg=trades.filter(t=>t.market==='SG').length;
+  dch('d');
+  chs.d=new Chart(document.getElementById('cDist'),{type:'doughnut',data:{labels:['🇺🇸 US','🇸🇬 SGX'],datasets:[{data:[Math.max(us,0.01),sg],backgroundColor:['#00c8f0','#00dfa0'],borderWidth:0}]},options:{responsive:true,cutout:'62%',plugins:{legend:{display:true,labels:{color:'#4e6a88',font:{size:11}}}}}});
+}
+
+// ── TRADE TABLE ──────────────────────────────────────────
+function renderTrades() {
+  updateAll();
+  const wrap=document.getElementById('trade-table');
+  if(!trades.length){wrap.innerHTML='<div class="empty"><div class="ico">📋</div><p>No trades yet — go to ➕ Add Trade.</p></div>';return;}
+  const rows=[...trades].reverse().map((t,ri)=>{
+    const idx=trades.length-1-ri;
+    const ccy=t.currency||'SGD';
+    const p=pnl(t);
+    const costOrig=Number(t.premium)||0;
+    const costSGD=toSGD(costOrig,ccy);
+    const procOrig=Number(t.close_price)||0;
+    const procSGD=toSGD(procOrig,ccy);
+    const isUSD=ccy==='USD';
+
+    const costStr=isUSD
+      ?`<span style="color:var(--orange)">${fmtUSD(costOrig)}</span><br><span style="color:var(--muted);font-size:0.7em">${fmtSGD(costSGD)}</span>`
+      :`<span style="color:var(--yellow)">${fmtSGD(costOrig)}</span>`;
+    const procStr=t.status==='Open'?'—':(isUSD
+      ?`<span style="color:var(--orange)">${fmtUSD(procOrig)}</span><br><span style="color:var(--muted);font-size:0.7em">${fmtSGD(procSGD)}</span>`
+      :`<span style="color:var(--purple)">${fmtSGD(procOrig)}</span>`);
+    const pStr=t.status==='Open'?'<span style="color:var(--muted)">—</span>'
+      :`<span class="mono" style="color:${p>=0?'var(--green)':'var(--red)'};font-weight:700">${p>=0?'+':''}${fmtSGD(p)}</span>`;
+
+    return `<tr>
+      <td style="white-space:nowrap;font-size:0.77rem">${t.open_date||'—'}</td>
+      <td><span class="badge b-${t.market==='US'?'us':'sg'}">${t.market}</span></td>
+      <td class="mono" style="font-weight:700">${t.symbol}</td>
+      <td><span class="badge b-${(t.type||'').toLowerCase()}">${t.type}</span></td>
+      <td style="font-size:0.75rem;white-space:nowrap">${t.strategy}</td>
+      <td class="mono">${t.strike||'—'}</td>
+      <td style="white-space:nowrap;font-size:0.77rem">${t.expiry||'—'}</td>
+      <td class="mono">${t.contracts}</td>
+      <td><span class="badge b-${isUSD?'usd':'sgd'}">${ccy}</span></td>
+      <td class="mono" style="line-height:1.4">${costStr}</td>
+      <td class="mono" style="line-height:1.4">${procStr}</td>
+      <td>${pStr}</td>
+      <td><span class="badge b-${t.status==='Open'?'open':t.status==='Expired'?'expired':'closed'}">${t.status}</span></td>
+      <td style="max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted);font-size:0.73rem">${t.notes||''}</td>
+      <td style="white-space:nowrap">
+        ${t.status==='Open'?`<button class="qc-btn" onclick="openQC(${idx})">⚡ Close</button>`:''}
+        <button class="edit-btn" onclick="openEdit(${idx})">✏️</button>
+        <button class="del" onclick="delTrade(${idx})">✕</button>
+      </td>
+    </tr>`;
+  });
+  wrap.innerHTML=`<table><thead><tr>
+    <th>Date</th><th>Mkt</th><th>Symbol</th><th>Type</th><th>Strategy</th>
+    <th>Strike</th><th>Expiry</th><th>Qty</th><th>Ccy</th>
+    <th>Cost Basis</th><th>Proceeds</th><th>P&L (SGD)</th>
+    <th>Status</th><th>Notes</th><th></th>
+  </tr></thead><tbody>${rows.join('')}</tbody></table>`;
+}
+
+function delTrade(idx){
+  if(!confirm('Delete this trade?')) return;
+  trades.splice(idx,1);saveAll();renderTrades();updateAll();toast('Trade deleted');
+}
+
+// ── EDIT MODAL ───────────────────────────────────────────
+const STRATS=['Long Call','Long Put','Covered Call','Cash-Secured Put','Naked Call','Naked Put',
+  'Bull Call Spread','Bear Call Spread','Bull Put Spread','Bear Put Spread',
+  'Iron Condor','Iron Butterfly','Straddle','Strangle','Jade Lizard',
+  'Ratio Spread','Collar','Calendar Spread','Diagonal Spread',
+  "PMCC (Poor Man's Covered Call)",'Other'];
+
+function openEdit(idx){
+  const t=trades[idx]; editId=t.id;
+  const fields=[
+    {id:'em',label:'Market',type:'select',opts:['US','SG'],val:t.market},
+    {id:'esym',label:'Symbol',type:'text',val:t.symbol},
+    {id:'etype',label:'Type',type:'select',opts:['CALL','PUT'],val:t.type},
+    {id:'eccy',label:'Currency',type:'select',opts:['SGD','USD'],val:t.currency||'SGD'},
+    {id:'estrat',label:'Strategy',type:'select',opts:STRATS,val:t.strategy},
+    {id:'estrike',label:'Strike',type:'number',val:t.strike},
+    {id:'eexpiry',label:'Expiry',type:'date',val:t.expiry},
+    {id:'econtracts',label:'Contracts',type:'number',val:t.contracts},
+    {id:'epremium',label:'Premium / Cost Basis',type:'number',val:t.premium},
+    {id:'eopendate',label:'Open Date',type:'date',val:t.open_date},
+    {id:'eclosedate',label:'Close Date',type:'date',val:t.close_date},
+    {id:'ecloseamt',label:'Close Proceeds',type:'number',val:t.close_price},
+    {id:'estatus',label:'Status',type:'select',opts:['Open','Closed','Expired'],val:t.status},
+    {id:'erisk',label:'Max Risk',type:'number',val:t.risk},
+    {id:'enotes',label:'Notes',type:'text',val:t.notes,span:true},
+  ];
+  document.getElementById('edit-grid').innerHTML=fields.map(f=>`
+    <div class="fg" ${f.span?'style="grid-column:span 2"':''}>
+      <label>${f.label}</label>
+      ${f.type==='select'
+        ?`<select id="${f.id}">${f.opts.map(o=>`<option ${o===f.val?'selected':''}>${o}</option>`).join('')}</select>`
+        :`<input id="${f.id}" type="${f.type}" value="${f.val||''}">`}
+    </div>`).join('');
+  document.getElementById('edit-modal').classList.add('open');
+}
+function closeModal(){document.getElementById('edit-modal').classList.remove('open');editId=null;}
+function saveEdit(){
+  const g=id=>document.getElementById(id)?.value.trim();
+  const idx=trades.findIndex(t=>t.id===editId); if(idx===-1) return;
+  trades[idx]={...trades[idx],market:g('em'),symbol:(g('esym')||'').toUpperCase(),type:g('etype'),
+    currency:g('eccy'),strategy:g('estrat'),strike:g('estrike'),expiry:g('eexpiry'),
+    contracts:g('econtracts'),premium:g('epremium'),open_date:g('eopendate'),
+    close_date:g('eclosedate'),close_price:g('ecloseamt'),status:g('estatus'),risk:g('erisk'),notes:g('enotes')};
+  saveAll();closeModal();renderTrades();renderDash();toast('Trade updated!');
+  if(scriptUrl)syncTrade(trades[idx]);
+}
+
+// ── ADD TRADE ─────────────────────────────────────────────
+function saveTrade(){
+  const g=id=>document.getElementById(id).value.trim();
+  if(!g('fsym')||!g('fpremium')){toast('Symbol and Premium are required','err');return;}
+  const t={id:Date.now(),market:g('fm'),symbol:g('fsym').toUpperCase(),type:g('ftype'),
+    currency:g('fccy'),strategy:g('fstrat'),strike:g('fstrike'),expiry:g('fexpiry'),
+    contracts:g('fcontracts')||'1',premium:g('fpremium'),open_date:g('fopendate'),
+    close_date:g('fclosedate'),close_price:g('fcloseamt'),status:g('fstatus'),
+    risk:g('frisk')||g('fpremium'),notes:g('fnotes')};
+  trades.push(t);saveAll();clearForm();
+  toast('Trade saved!');
+  if(scriptUrl)syncTrade(t);
+  document.querySelectorAll('nav button:not(.btn-csv)')[1].click();
+}
+function clearForm(){
+  ['fsym','fstrike','fexpiry','fpremium','fopendate','fclosedate','fcloseamt','frisk','fnotes'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('fcontracts').value='1';
+  document.getElementById('sgd-preview').style.display='none';
+  updateCcyHints();
+}
+
+// ── QUICK CLOSE ──────────────────────────────────────────
+function openQC(idx){
+  const t=trades[idx]; qcId=t.id;
+  const ccy=t.currency||'SGD';
+  const isUSD=ccy==='USD';
+  const today=new Date().toISOString().slice(0,10);
+  document.getElementById('qc-subtitle').textContent=`${t.symbol} · ${t.type} · ${t.strategy}`;
+  document.getElementById('qc-cost').textContent=isUSD?fmtUSD(t.premium):fmtSGD(t.premium);
+  document.getElementById('qc-ccy-badge').innerHTML=`<span class="badge b-${isUSD?'usd':'sgd'}">${ccy}</span>${isUSD?` <span style="color:var(--muted);font-size:0.7rem">= ${fmtSGD(toSGD(t.premium,'USD'))}</span>`:''}`;
+  document.getElementById('qc-proceeds-lbl').textContent=`(${ccy})`;
+  document.getElementById('qc-opened').textContent=t.open_date||'—';
+  document.getElementById('qc-expiry').textContent=t.expiry||'—';
+  document.getElementById('qc-date').value=today;
+  document.getElementById('qc-proceeds').value='';
+  document.getElementById('qc-status').value='Closed';
+  document.getElementById('qc-pnl-preview').style.display='none';
+  document.getElementById('qc-modal').classList.add('open');
+
+  document.getElementById('qc-proceeds').oninput=function(){
+    const cost=Number(t.premium)||0;
+    const proceeds=Number(this.value)||0;
+    const pOrig=proceeds-cost;
+    const pSGD=toSGD(proceeds,ccy)-toSGD(cost,ccy);
+    const preview=document.getElementById('qc-pnl-preview');
+    preview.style.display='block';
+    const origEl=document.getElementById('qc-pnl-orig');
+    origEl.textContent=(pOrig>=0?'+':'')+(isUSD?fmtUSD(Math.abs(pOrig)):fmtSGD(pOrig));
+    origEl.style.color=pOrig>=0?'var(--green)':'var(--red)';
+    const sgdEl=document.getElementById('qc-pnl-sgd');
+    if(isUSD){sgdEl.textContent=`= ${pSGD>=0?'+':''}${fmtSGD(pSGD)} SGD at ${CFG.fx}`;}
+    else{sgdEl.textContent='';}
+    preview.style.borderColor=pOrig>=0?'rgba(0,223,160,0.3)':'rgba(255,61,94,0.3)';
+  };
+  document.getElementById('qc-status').onchange=function(){
+    if(this.value==='Expired'){
+      document.getElementById('qc-proceeds').value='0';
+      document.getElementById('qc-proceeds').dispatchEvent(new Event('input'));
+    }
+  };
+}
+function closeQCModal(){document.getElementById('qc-modal').classList.remove('open');qcId=null;}
+function saveQuickClose(){
+  const closeDate=document.getElementById('qc-date').value;
+  const proceeds=document.getElementById('qc-proceeds').value;
+  const status=document.getElementById('qc-status').value;
+  if(!closeDate){toast('Please enter a close date','err');return;}
+  if(proceeds===''){toast('Please enter close proceeds (0 if expired)','err');return;}
+  const idx=trades.findIndex(t=>t.id===qcId); if(idx===-1)return;
+  trades[idx]={...trades[idx],close_date:closeDate,close_price:proceeds,status};
+  saveAll();closeQCModal();renderTrades();renderDash();updateAll();
+  const p=pnl(trades[idx]);
+  toast(`${trades[idx].symbol} closed — P&L: ${p>=0?'+':''}${fmtSGD(p)} SGD`);
+  if(scriptUrl)syncTrade(trades[idx]);
+}
+
+// ── RISK ─────────────────────────────────────────────────
+function renderRisk(){
+  updateAll();
+  const maxPtPct=Number(document.getElementById('rmaxpt').value)||2;
+  const maxPfPct=Number(document.getElementById('rmaxpf').value)||15;
+  const s=calcStats();
+  const maxPt=s.balance*maxPtPct/100,maxPf=s.balance*maxPfPct/100;
+  const openPct=s.balance>0?s.openRisk/s.balance*100:0;
+  const rem=Math.max(maxPf-s.openRisk,0);
+  const rc=s.openRisk>maxPf?'var(--red)':s.openRisk>maxPf*0.8?'var(--yellow)':'var(--green)';
+  const gpct=Math.max(0,Math.min(((s.balance-CFG.start)/(CFG.goal-CFG.start))*100,100));
+  const roi=CFG.start>0?((s.balance-CFG.start)/CFG.start*100):0;
+  const items=[
+    {lbl:'Max Risk Per Trade (SGD)',val:fmtSGD(maxPt),note:maxPtPct+'% of '+fmtSGD(s.balance),bar:null,cls:'cb'},
+    {lbl:'Max Portfolio Risk (SGD)',val:fmtSGD(maxPf),note:maxPfPct+'% of balance at once',bar:null,cls:'cb'},
+    {lbl:'Current Open Risk (SGD)',val:fmtSGD(s.openRisk),note:openPct.toFixed(1)+'% used — '+fmtSGD(rem)+' left',bar:{pct:Math.min(openPct/maxPfPct*100,100),col:rc},cls:s.openRisk>maxPf?'cr':'cg'},
+    {lbl:'Profit Factor',val:s.profitFactor>0?s.profitFactor.toFixed(2)+'x':'N/A',note:s.profitFactor>=1.5?'✅ Strong':s.profitFactor>=1?'⚠️ Aim for 1.5x+':'❌ Review strategy',bar:null,cls:s.profitFactor>=1.5?'cg':s.profitFactor>=1?'cy':'cr'},
+    {lbl:'Goal Progress',val:gpct.toFixed(1)+'%',note:fmtSGD(s.balance)+' of '+fmtSGD(CFG.goal),bar:{pct:gpct,col:'var(--green)'},cls:'cg'},
+    {lbl:'Return on Capital',val:(roi>=0?'+':'')+roi.toFixed(1)+'%',note:'since starting capital',bar:null,cls:roi>=0?'cg':'cr'},
+  ];
+  document.getElementById('risk-grid').innerHTML=items.map(i=>`
+    <div class="rcrd"><div class="lbl">${i.lbl}</div>
+    <div class="val ${i.cls}">${i.val}</div><div class="note">${i.note}</div>
+    ${i.bar?`<div class="mbar"><div class="mfill" style="width:${i.bar.pct}%;background:${i.bar.col}"></div></div>`:''}</div>`).join('');
+}
+
+// ── ASSIGNMENTS ──────────────────────────────────────────
+function stockPnl(s) {
+  const ccy=s.currency||'SGD';
+  if(s.status==='Sold'&&s.sell_price) return toSGD((Number(s.sell_price)-Number(s.assigned_price))*Number(s.shares),ccy);
+  if(s.current_price) return toSGD((Number(s.current_price)-Number(s.assigned_price))*Number(s.shares),ccy);
+  return 0;
+}
+function populateLinkedOptions(){
+  const sel=document.getElementById('slinked');
+  sel.innerHTML='<option value="">— None —</option>';
+  trades.filter(t=>t.status!=='Open').forEach(t=>{
+    const opt=document.createElement('option');
+    opt.value=t.id;
+    opt.textContent=`${t.symbol} ${t.type} @${t.strike} (${t.status})`;
+    sel.appendChild(opt);
+  });
+}
+function autoCalcCost(){
+  const strike=Number(document.getElementById('sstrike').value)||0;
+  const shares=Number(document.getElementById('sshares').value)||0;
+  if(strike&&shares){document.getElementById('scost').value=(strike*shares).toFixed(2);previewStockPnl();}
+  else toast('Enter strike and shares first','err');
+}
+function previewStockPnl(){
+  const assigned=Number(document.getElementById('sstrike').value)||0;
+  const shares=Number(document.getElementById('sshares').value)||0;
+  const current=Number(document.getElementById('scurrent').value)||0;
+  const sell=Number(document.getElementById('ssellprice').value)||0;
+  const ccy=document.getElementById('sccy').value;
+  const preview=document.getElementById('stock-pnl-preview');
+  if(!assigned||!shares){preview.style.display='none';return;}
+  const price=sell||current; if(!price){preview.style.display='none';return;}
+  const pOrig=(price-assigned)*shares;
+  const pSGD=toSGD(pOrig,ccy);
+  preview.style.display='block';
+  preview.style.color=pOrig>=0?'var(--green)':'var(--red)';
+  const pct=((price-assigned)/assigned*100).toFixed(1);
+  preview.textContent=`${sell?'Realised':'Unrealised'}: ${pOrig>=0?'+':''}${ccy==='USD'?fmtUSD(Math.abs(pOrig)):fmtSGD(pOrig)} (${pct}%)${ccy==='USD'?' = '+fmtSGD(pSGD)+' SGD':''}`;
+}
+function saveStock(){
+  const g=id=>document.getElementById(id).value.trim();
+  if(!g('ssym')||!g('sshares')||!g('sstrike')){toast('Symbol, shares and assigned price required','err');return;}
+  stocks.push({id:Date.now(),market:g('sm'),symbol:g('ssym').toUpperCase(),currency:g('sccy'),
+    atype:g('satype'),shares:g('sshares'),assigned_price:g('sstrike'),cost:g('scost'),
+    assign_date:g('sadate'),current_price:g('scurrent'),sell_date:g('sselldate'),
+    sell_price:g('ssellprice'),status:g('sstatus'),linked_id:g('slinked'),notes:g('snotes')});
+  saveAll();clearStockForm();renderStocks();toast('Position saved!');
+}
+function clearStockForm(){
+  ['ssym','sshares','sstrike','scost','sadate','scurrent','sselldate','ssellprice','snotes'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('stock-pnl-preview').style.display='none';
+}
+function delStock(idx){if(!confirm('Delete this position?'))return;stocks.splice(idx,1);saveAll();renderStocks();toast('Position deleted');}
+function quickSellStock(idx){
+  const s=stocks[idx];
+  const price=prompt(`Sell price per share for ${s.symbol} (${s.currency||'SGD'}):`);
+  if(!price||isNaN(price))return;
+  const sellDate=prompt('Sell date (YYYY-MM-DD):',new Date().toISOString().slice(0,10));
+  if(!sellDate)return;
+  stocks[idx]={...s,sell_price:price,sell_date:sellDate,status:'Sold'};
+  saveAll();renderStocks();
+  const p=stockPnl(stocks[idx]);
+  toast(`${s.symbol} sold — P&L: ${p>=0?'+':''}${fmtSGD(p)} SGD`);
+}
+function renderStocks(){
+  const held=stocks.filter(s=>s.status==='Holding');
+  const sold=stocks.filter(s=>s.status==='Sold');
+  const totalCost=stocks.reduce((a,s)=>a+toSGD(Number(s.cost)||(Number(s.assigned_price)*Number(s.shares)),s.currency||'SGD'),0);
+  const realisedPnl=sold.reduce((a,s)=>a+stockPnl(s),0);
+  const unrealisedPnl=held.reduce((a,s)=>a+stockPnl(s),0);
+  document.getElementById('assign-banner').innerHTML=[
+    {lbl:'Open Positions',val:held.length,sub:'currently holding shares',cls:'cy'},
+    {lbl:'Total Cost Basis (SGD)',val:fmtSGD(totalCost),sub:'assigned position cost',cls:'cy'},
+    {lbl:'Unrealised P&L (SGD)',val:(unrealisedPnl>=0?'+':'')+fmtSGD(unrealisedPnl),sub:'on held shares',cls:unrealisedPnl>=0?'cg':'cr'},
+    {lbl:'Realised P&L (SGD)',val:(realisedPnl>=0?'+':'')+fmtSGD(realisedPnl),sub:'from sold positions',cls:realisedPnl>=0?'cg':'cr'},
+    {lbl:'Positions Closed',val:sold.length,sub:'sold stock positions',cls:'cb'},
+  ].map(c=>`<div class="assign-card"><div class="lbl">${c.lbl}</div><div class="val ${c.cls}">${c.val}</div><div class="sub">${c.sub}</div></div>`).join('');
+
+  const wrap=document.getElementById('stock-table');
+  if(!stocks.length){wrap.innerHTML='<div class="empty"><div class="ico">📦</div><p>No assignments logged yet.<br>Add one above when you get assigned shares.</p></div>';return;}
+  const rows=[...stocks].reverse().map((s,ri)=>{
+    const idx=stocks.length-1-ri;
+    const p=stockPnl(s);
+    const ccy=s.currency||'SGD';
+    const cost=Number(s.cost)||(Number(s.assigned_price)*Number(s.shares));
+    const pct=s.assigned_price>0?((p/toSGD(cost,ccy))*100).toFixed(1):'0.0';
+    const pStr=(p===0&&!s.current_price&&!s.sell_price)?'<span style="color:var(--muted)">—</span>'
+      :`<span class="mono" style="color:${p>=0?'var(--green)':'var(--red)'};font-weight:700">${p>=0?'+':''}${fmtSGD(p)} <span style="font-size:0.73em;opacity:0.7">(${pct}%)</span></span>`;
+    const linked=s.linked_id?trades.find(t=>String(t.id)===String(s.linked_id)):null;
+    return `<tr>
+      <td style="white-space:nowrap;font-size:0.77rem">${s.assign_date||'—'}</td>
+      <td><span class="badge b-${s.market==='US'?'us':'sg'}">${s.market}</span></td>
+      <td class="mono" style="font-weight:700">${s.symbol}</td>
+      <td><span class="badge b-${ccy.toLowerCase()}">${ccy}</span></td>
+      <td style="font-size:0.73rem;white-space:nowrap;color:var(--muted)">${s.atype}</td>
+      <td class="mono">${Number(s.shares).toLocaleString()}</td>
+      <td class="mono" style="color:var(--yellow)">${ccy==='USD'?fmtUSD(s.assigned_price):fmtSGD(s.assigned_price)}</td>
+      <td class="mono">${fmtSGD(toSGD(cost,ccy))}</td>
+      <td class="mono" style="color:var(--muted);font-size:0.8rem">${s.current_price?(ccy==='USD'?fmtUSD(s.current_price):fmtSGD(s.current_price)):'—'}</td>
+      <td class="mono" style="color:var(--purple);font-size:0.8rem">${s.sell_price?(ccy==='USD'?fmtUSD(s.sell_price):fmtSGD(s.sell_price)):'—'}</td>
+      <td>${pStr}</td>
+      <td><span class="badge ${s.status==='Holding'?'b-open':'b-closed'}">${s.status}</span></td>
+      <td style="font-size:0.72rem;color:var(--accent)">${linked?`${linked.symbol} ${linked.type}`:'—'}</td>
+      <td style="white-space:nowrap">
+        ${s.status==='Holding'?`<button class="sell-btn" onclick="quickSellStock(${idx})">💰 Sell</button>`:''}
+        <button class="del" onclick="delStock(${idx})">✕</button>
+      </td>
+    </tr>`;
+  });
+  wrap.innerHTML=`<table><thead><tr>
+    <th>Date</th><th>Mkt</th><th>Symbol</th><th>Ccy</th><th>Assignment Type</th>
+    <th>Shares</th><th>Assigned Price</th><th>Cost (SGD)</th>
+    <th>Current</th><th>Sell Price</th><th>P&L (SGD)</th>
+    <th>Status</th><th>Linked Option</th><th></th>
+  </tr></thead><tbody>${rows.join('')}</tbody></table>`;
+}
+function renderAssignments(){populateLinkedOptions();renderStocks();}
+
+// ── GOOGLE SHEETS ─────────────────────────────────────────
+function saveScriptUrl(){scriptUrl=document.getElementById('script-url').value.trim();localStorage.setItem('opt_script_url',scriptUrl);}
+async function syncTrade(t){
+  if(!scriptUrl)return;setSyncStatus('pulse','Syncing…');
+  try{await fetch(scriptUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'addTrade',trade:t})});setSyncStatus('ok','Synced ✓');}
+  catch(e){setSyncStatus('err','Sync failed');}
+}
+async function syncAll(){
+  if(!scriptUrl){toast('Enter Script URL first','err');return;}
+  setSyncStatus('pulse','Syncing all…');
+  try{await fetch(scriptUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'syncAll',trades})});setSyncStatus('ok','All synced ✓');toast('All trades synced!');}
+  catch(e){setSyncStatus('err','Sync failed');toast('Sync failed — check URL','err');}
+}
+async function testConn(){
+  const url=document.getElementById('script-url').value.trim();
+  const res=document.getElementById('conn-res');
+  if(!url){res.textContent='⚠️ Enter URL first';return;}
+  scriptUrl=url;localStorage.setItem('opt_script_url',url);
+  res.textContent='⏳ Testing…';setSyncStatus('pulse','Testing…');
+  try{await fetch(url+'?action=ping',{mode:'no-cors'});res.textContent='✅ Connected!';res.style.color='var(--green)';setSyncStatus('ok','Connected');toast('Connection successful!');}
+  catch(e){res.textContent='❌ Could not connect';res.style.color='var(--red)';setSyncStatus('err','Error');}
+}
+
+// ── CSV ───────────────────────────────────────────────────
+function exportCSV(){
+  const h=['ID','Market','Symbol','Type','Strategy','Currency','Strike','Expiry','Contracts','Premium','Open_Date','Close_Date','Close_Proceeds','Status','MaxRisk','PnL_SGD','Notes'];
+  const rows=trades.map(t=>[t.id,t.market,t.symbol,t.type,t.strategy,t.currency||'SGD',t.strike,t.expiry,t.contracts,t.premium,t.open_date,t.close_date,t.close_price,t.status,t.risk,pnl(t).toFixed(2),`"${(t.notes||'').replace(/"/g,'""')}"`]);
+  const csv=[h.join(','),...rows.map(r=>r.join(','))].join('\n');
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
+  a.download=`options_trades_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();toast('CSV exported!');
+}
+function importCSV(e){
+  const file=e.target.files[0];if(!file)return;
+  const r=new FileReader();
+  r.onload=ev=>{
+    const lines=ev.target.result.split('\n').filter(l=>l.trim());
+    const hdrs=lines[0].split(',');
+    const imp=lines.slice(1).map(line=>{
+      const v=line.split(',');const t={};
+      hdrs.forEach((h,i)=>t[h.toLowerCase().replace(/_/g,'')]=(v[i]||'').replace(/^"|"$/g,'').trim());
+      t.id=t.id||Date.now()+Math.random();
+      t.currency=t.currency||'SGD';
+      return t;
+    });
+    if(confirm(`Import ${imp.length} trades?`)){trades=[...trades,...imp];saveAll();toast(`Imported ${imp.length} trades!`);renderDash();}
+  };
+  r.readAsText(file);e.target.value='';
+}
+
+// ── OVERLAY CLICK TO CLOSE ───────────────────────────────
+document.getElementById('edit-modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
+document.getElementById('qc-modal').addEventListener('click',function(e){if(e.target===this)closeQCModal();});
+
+// ── INIT ─────────────────────────────────────────────────
+updateAll();
+renderDash();
+renderTopupHistory();
+</script>
+</body>
+</html>
