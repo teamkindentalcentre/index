@@ -406,12 +406,13 @@ const fmt=(n,dp=2)=>n===null||!isFinite(n)?'—':n.toLocaleString('en-US',{minim
 const usd=(n,dp=2)=>n===null||!isFinite(n)?'—':(n<0?'-$':'$')+fmt(Math.abs(n),dp);
 
 function readInputs(){
+  const rf=num('rf-rate'),tgt=num('tgt-move');
   return {
     ticker:($('ticker').value||'').trim().toUpperCase(),
     spot:num('spot'),
     lK:num('l-strike'),lDte:num('l-dte'),lIv:(num('l-iv')||0)/100,lDelta:num('l-delta'),lPrem:num('l-prem'),
     sK:num('s-strike'),sDte:num('s-dte'),sIv:(num('s-iv')||0)/100,sDelta:num('s-delta'),sPrem:num('s-prem'),
-    r:(num('rf-rate')??4)/100,move:(num('tgt-move')??10)/100
+    r:(rf!==null?rf:4)/100,move:(tgt!==null?tgt:10)/100
   };
 }
 
