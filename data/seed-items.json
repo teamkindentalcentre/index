@@ -1,0 +1,2479 @@
+{
+  "rooms": [
+    {
+      "id": "blue",
+      "name": "Blue Room",
+      "sections": [
+        {
+          "name": "L3-PROPHY",
+          "items": [
+            {
+              "name": "Prophy Jet handpiece",
+              "expectedQty": "1"
+            },
+            {
+              "name": "X-ray Thyroid Cover",
+              "expectedQty": "1"
+            }
+          ]
+        },
+        {
+          "name": "L3-PROPHY \u2013 Consumable",
+          "items": [
+            {
+              "name": "Prophy Jet Powder (min 2)",
+              "expectedQty": "4 btl"
+            }
+          ]
+        },
+        {
+          "name": "L4-EXTRACTION",
+          "items": [
+            {
+              "name": "Suture Set (needle holder &tissue holder)",
+              "expectedQty": "1set"
+            },
+            {
+              "name": "Needle holder (Crile Murray)",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Tissue holder",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Bone Carrier",
+              "expectedQty": "1"
+            },
+            {
+              "name": "LAOP SET -(In LAOP Tray)",
+              "expectedQty": null
+            },
+            {
+              "name": "Austin retractor",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Periosteal elevator",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Scapel blade holder",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Root pick",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Galipot",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Minnisota retractor",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Surgical spoon",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Bone Ronguer",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Tissue holder",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Needle holder (castro)",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Sto Scissors",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Mitchell",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Artery Forcep",
+              "expectedQty": "2"
+            },
+            {
+              "name": "Luxator",
+              "expectedQty": "2"
+            },
+            {
+              "name": "Couplands",
+              "expectedQty": "3"
+            },
+            {
+              "name": "Root pick",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Warwick james left",
+              "expectedQty": "2"
+            },
+            {
+              "name": "Warwick james right",
+              "expectedQty": "2"
+            },
+            {
+              "name": "Surgical Burs",
+              "expectedQty": "1 Set"
+            },
+            {
+              "name": "Sto Scissors",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Scapel blade holder",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Galipot",
+              "expectedQty": "1"
+            }
+          ]
+        },
+        {
+          "name": "L4-EXTRACTION \u2013 Consumable",
+          "items": [
+            {
+              "name": "Sterilised Gauze ( min 5)",
+              "expectedQty": null
+            }
+          ]
+        },
+        {
+          "name": "L5 -DENTURE",
+          "items": [
+            {
+              "name": "Hot Plate",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Wax Knife",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Shade guide (delphic)",
+              "expectedQty": "2"
+            },
+            {
+              "name": "Centrilux Denture Shade guide Set",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Lecron Carver",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Indelible pencil",
+              "expectedQty": "1"
+            }
+          ]
+        },
+        {
+          "name": "L5 -DENTURE \u2013 Consumable",
+          "items": [
+            {
+              "name": "Metro wax (min 1box)",
+              "expectedQty": null
+            },
+            {
+              "name": "Green Stick (min 5 sticks)",
+              "expectedQty": null
+            },
+            {
+              "name": "GC Reline II Soft Reline Material",
+              "expectedQty": null
+            },
+            {
+              "name": "GC Reline II Soft Reline Primer",
+              "expectedQty": null
+            },
+            {
+              "name": "Tokuyama Repair Resin set",
+              "expectedQty": null
+            }
+          ]
+        },
+        {
+          "name": "L6 -FILLING",
+          "items": [
+            {
+              "name": "Ring Holder",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Glass Dappen Dish",
+              "expectedQty": "5"
+            },
+            {
+              "name": "Matrix Band Holder",
+              "expectedQty": "2"
+            },
+            {
+              "name": "Glass slab",
+              "expectedQty": "1"
+            }
+          ]
+        },
+        {
+          "name": "L6 -FILLING \u2013 Consumable",
+          "items": [
+            {
+              "name": "Articulating paper",
+              "expectedQty": null
+            },
+            {
+              "name": "Shim Stock",
+              "expectedQty": null
+            },
+            {
+              "name": "Clear matrix (min 10 pcs)",
+              "expectedQty": null
+            },
+            {
+              "name": "Polishing Paste",
+              "expectedQty": null
+            },
+            {
+              "name": "Metal Matrix (min 10 pcs)",
+              "expectedQty": null
+            },
+            {
+              "name": "Soflex Disc (min 10 pcs) all 3 colors",
+              "expectedQty": null
+            },
+            {
+              "name": "Polishing Strip (Coarse)",
+              "expectedQty": null
+            },
+            {
+              "name": "Polishing Strip (Medium)",
+              "expectedQty": null
+            },
+            {
+              "name": "Composite A2 Gaenial",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Composite A02 Gaenial",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Composite A3 Gaenial",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Composite AO3 Gaenial",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Composite A2 Solarex",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Composite A02 Solarex",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Flowable A2",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Etchant",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Theracal (Dycal)",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Vaseline",
+              "expectedQty": null
+            }
+          ]
+        },
+        {
+          "name": "Sectional Matrix Set",
+          "items": [
+            {
+              "name": "Sectional Matrix S (MIN 10pieces)",
+              "expectedQty": null
+            },
+            {
+              "name": "Sectional Matrix M (MIN 10pieces)",
+              "expectedQty": null
+            },
+            {
+              "name": "Sectional Matrix L  (MIN 10pieces)",
+              "expectedQty": null
+            },
+            {
+              "name": "Sectional Matrix S  with ledge  (MIN 10pieces)",
+              "expectedQty": null
+            },
+            {
+              "name": "Sectional Matrix M with ledge (MIN 10pieces)",
+              "expectedQty": null
+            },
+            {
+              "name": "Sectional Matrix L with Ledge  (MIN 10pieces)",
+              "expectedQty": null
+            },
+            {
+              "name": "Sectional Matrix S",
+              "expectedQty": null
+            },
+            {
+              "name": "Standard Ring",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Delta Ring (Fork)",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Green Plastic for Ring",
+              "expectedQty": null
+            },
+            {
+              "name": "Small Plastic Wedge (Blue)",
+              "expectedQty": null
+            },
+            {
+              "name": "Medium plastic Wedge (Yellow)",
+              "expectedQty": null
+            }
+          ]
+        },
+        {
+          "name": "Strata G - Garrison Matrix Set",
+          "items": [
+            {
+              "name": "Sectional Matrixes",
+              "expectedQty": null
+            },
+            {
+              "name": "SS  Premolar FXH100",
+              "expectedQty": null
+            },
+            {
+              "name": "SS  Premolar w/deep cervical prep FXH150",
+              "expectedQty": null
+            },
+            {
+              "name": "SS  Premolar/ small molars  FXH175",
+              "expectedQty": null
+            },
+            {
+              "name": "SS  Molar FXH200",
+              "expectedQty": null
+            },
+            {
+              "name": "SS  Molar with/deep cervical prep  FXH300",
+              "expectedQty": null
+            },
+            {
+              "name": "Coated Pediatric  SG050",
+              "expectedQty": null
+            },
+            {
+              "name": "Coated Premolar   SG100",
+              "expectedQty": null
+            },
+            {
+              "name": "Coated Premolar/Small Molars   SG175",
+              "expectedQty": null
+            },
+            {
+              "name": "Coated Molars   SG200",
+              "expectedQty": null
+            },
+            {
+              "name": "Coated Molars  w/ Deep cervical preps SG300",
+              "expectedQty": null
+            },
+            {
+              "name": "Wedge (Yellow) SGYL",
+              "expectedQty": null
+            },
+            {
+              "name": "Wedge (Blue) SGBL",
+              "expectedQty": null
+            },
+            {
+              "name": "Wedge (Orange) SGOR",
+              "expectedQty": null
+            },
+            {
+              "name": "Wedge (Green) SGR",
+              "expectedQty": null
+            },
+            {
+              "name": "Margin elevation band SMT 500 H10",
+              "expectedQty": null
+            },
+            {
+              "name": "Anterior Strip VS01",
+              "expectedQty": null
+            },
+            {
+              "name": "Garrison Ring Blue SG400",
+              "expectedQty": null
+            },
+            {
+              "name": "Garrison Ring Orange SG500",
+              "expectedQty": null
+            },
+            {
+              "name": "Garrison Ring Blue SG600",
+              "expectedQty": null
+            }
+          ]
+        },
+        {
+          "name": "L7 -LA",
+          "items": [
+            {
+              "name": "LA Syringe",
+              "expectedQty": "4"
+            },
+            {
+              "name": "Mouth Prop",
+              "expectedQty": "1"
+            }
+          ]
+        },
+        {
+          "name": "L7 -LA \u2013 Consumable",
+          "items": [
+            {
+              "name": "LA Catrige 2%",
+              "expectedQty": null
+            },
+            {
+              "name": "LA Catrige 4%",
+              "expectedQty": null
+            },
+            {
+              "name": "Topical LA Gel (min 1 btl)",
+              "expectedQty": null
+            },
+            {
+              "name": "Cotton Bud",
+              "expectedQty": null
+            },
+            {
+              "name": "Suture Non-Absorbable (min 5)",
+              "expectedQty": null
+            },
+            {
+              "name": "Spongiostan/Gelita (min 5)",
+              "expectedQty": null
+            },
+            {
+              "name": "Dental Needle (Short) 0.30x22mm",
+              "expectedQty": null
+            },
+            {
+              "name": "Dental Needle (Long) 0.40x41mm",
+              "expectedQty": null
+            }
+          ]
+        },
+        {
+          "name": "L8 -FILLING INSTRUMENT & HANDPIECES",
+          "items": [
+            {
+              "name": "Filling Set -",
+              "expectedQty": "5 SET"
+            },
+            {
+              "name": "- plastic 6",
+              "expectedQty": null
+            },
+            {
+              "name": "- Ball Burnisher",
+              "expectedQty": null
+            },
+            {
+              "name": "- Spoon Excavator",
+              "expectedQty": null
+            },
+            {
+              "name": "Dycal Applicator",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Perio Probe",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Millers Holder/Articulating paper holder",
+              "expectedQty": "3"
+            },
+            {
+              "name": "Hand Scaler /Sickle Scaler",
+              "expectedQty": "3"
+            },
+            {
+              "name": "Straight handpiece",
+              "expectedQty": "2"
+            },
+            {
+              "name": "Slow Speed Handpiece",
+              "expectedQty": "5"
+            },
+            {
+              "name": "High Speed Handpiece",
+              "expectedQty": "5"
+            }
+          ]
+        },
+        {
+          "name": "L9 -EXTRACTION",
+          "items": [
+            {
+              "name": "Lower Incisor Forcep",
+              "expectedQty": "2"
+            },
+            {
+              "name": "Lower Premolar Forcep",
+              "expectedQty": "2"
+            },
+            {
+              "name": "Lower Molar Forcep",
+              "expectedQty": "2"
+            },
+            {
+              "name": "Lower Special 8",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Root Forceps",
+              "expectedQty": "2"
+            },
+            {
+              "name": "Upper Anterior Forcep",
+              "expectedQty": "2"
+            },
+            {
+              "name": "Upper Premolar Forcep",
+              "expectedQty": "2"
+            },
+            {
+              "name": "Upper Right Molar Forcep",
+              "expectedQty": "2"
+            },
+            {
+              "name": "Upper Left Molar Forcep",
+              "expectedQty": "2"
+            },
+            {
+              "name": "Upper Special 8",
+              "expectedQty": "2"
+            },
+            {
+              "name": "Lower Root Forcep",
+              "expectedQty": "1"
+            }
+          ]
+        },
+        {
+          "name": "L10 -PROSTHO(Crown)",
+          "items": [
+            {
+              "name": "Cord Packer",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Crown Bur set",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Dispensing Gun",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Vita Shade Guide",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Sectional Metal Tray",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Scapel with Blade & Cover",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Diposable Tray Q1/Q3",
+              "expectedQty": null
+            },
+            {
+              "name": "Diposable Tray Q2/ Q4",
+              "expectedQty": null
+            },
+            {
+              "name": "Temp Crown Material",
+              "expectedQty": null
+            },
+            {
+              "name": "Light Body",
+              "expectedQty": null
+            },
+            {
+              "name": "Medium Body APS",
+              "expectedQty": null
+            },
+            {
+              "name": "Putty",
+              "expectedQty": null
+            },
+            {
+              "name": "Retraction cord 00",
+              "expectedQty": null
+            },
+            {
+              "name": "Retraction cord 000",
+              "expectedQty": null
+            },
+            {
+              "name": "Adhesive Bottle",
+              "expectedQty": null
+            },
+            {
+              "name": "Temp Cement Material",
+              "expectedQty": null
+            },
+            {
+              "name": "Mixing Tips (Yellow)",
+              "expectedQty": null
+            },
+            {
+              "name": "Mixing Tips (Yellow, small tips)",
+              "expectedQty": null
+            },
+            {
+              "name": "Mixing Tips (Green)",
+              "expectedQty": null
+            },
+            {
+              "name": "Mixing Tips for temp crown",
+              "expectedQty": null
+            },
+            {
+              "name": "Disposable Trays",
+              "expectedQty": null
+            }
+          ]
+        },
+        {
+          "name": "L12 - XRAY HOLDERS",
+          "items": [
+            {
+              "name": "Yellow -- Posterior",
+              "expectedQty": null
+            },
+            {
+              "name": "Aiming Ring",
+              "expectedQty": "2"
+            },
+            {
+              "name": "Metal indicator arms",
+              "expectedQty": "2"
+            },
+            {
+              "name": "Film Holders",
+              "expectedQty": "8"
+            },
+            {
+              "name": "Orange --  Bite Wing",
+              "expectedQty": null
+            },
+            {
+              "name": "Aiming Ring",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Metal indicator arms",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Film Holders",
+              "expectedQty": "4"
+            },
+            {
+              "name": "Blue -- Anterior",
+              "expectedQty": null
+            },
+            {
+              "name": "Aiming Ring",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Metal indicator arms",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Film Holders",
+              "expectedQty": "6"
+            },
+            {
+              "name": "Green -- Endo",
+              "expectedQty": null
+            },
+            {
+              "name": "Aiming Ring",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Metal indicator arms",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Film Holders",
+              "expectedQty": "4"
+            }
+          ]
+        },
+        {
+          "name": "L13 -(Root Canal)RCT",
+          "items": [
+            {
+              "name": "Rubber Dam Set --",
+              "expectedQty": null
+            },
+            {
+              "name": "Puncher",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Frame",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Clamp Holder",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Sto Scissors (LOST)",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Galipot",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Endo Box",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Endo Measuring Box",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Protaper set (6 files)",
+              "expectedQty": "1 set"
+            },
+            {
+              "name": "Endo Plugger",
+              "expectedQty": "2"
+            },
+            {
+              "name": "Rubber Damp Clamps (In Box) : 1T,2A, 7 ,8 ,912A, 13A ,14A",
+              "expectedQty": "8"
+            },
+            {
+              "name": "Rubber Dams",
+              "expectedQty": "Box"
+            }
+          ]
+        },
+        {
+          "name": "L14 -(Root Canal)RCT",
+          "items": [
+            {
+              "name": "Gutta Percha (GP Point)",
+              "expectedQty": "1box"
+            },
+            {
+              "name": "Paper Points",
+              "expectedQty": "1box"
+            },
+            {
+              "name": "Sealant (AH PLUS)",
+              "expectedQty": "1set"
+            },
+            {
+              "name": "Bunsen Burner (on the table top)",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Barbed Broach (min 3pieces)",
+              "expectedQty": null
+            },
+            {
+              "name": "F1 Protaper GP",
+              "expectedQty": "1"
+            },
+            {
+              "name": "F2 Protaper GP",
+              "expectedQty": "1"
+            },
+            {
+              "name": "F3 Protaper GP",
+              "expectedQty": "1"
+            },
+            {
+              "name": "F4 & F5 Protaper GP cones",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Calcium Hydroxide",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Odontopaste",
+              "expectedQty": "1"
+            },
+            {
+              "name": "DT light cure Post  (4 Drills)",
+              "expectedQty": "1 Set"
+            },
+            {
+              "name": "RC prep (glyde)",
+              "expectedQty": "1"
+            },
+            {
+              "name": "FKG",
+              "expectedQty": null
+            },
+            {
+              "name": "015 .04 25MM",
+              "expectedQty": "6"
+            },
+            {
+              "name": "025 .04 25MM",
+              "expectedQty": "6"
+            },
+            {
+              "name": "025 .06 25MM",
+              "expectedQty": "6"
+            },
+            {
+              "name": "030 .04 25MM",
+              "expectedQty": "6"
+            },
+            {
+              "name": "030 .06 25MM",
+              "expectedQty": "6"
+            },
+            {
+              "name": "040 .04 25MM",
+              "expectedQty": "6"
+            },
+            {
+              "name": "FKG GP CONES SIZE 30 , 0.04 Taper",
+              "expectedQty": "1 BOX"
+            },
+            {
+              "name": "FKG GP CONES SIZE 30 , 0.06 Taper",
+              "expectedQty": "1 BOX"
+            },
+            {
+              "name": "Endo motor accessories set",
+              "expectedQty": null
+            },
+            {
+              "name": "Protective sleeve",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Test wire B",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Lip Hook",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Lighting Device",
+              "expectedQty": "1"
+            }
+          ]
+        },
+        {
+          "name": "L15 - GIC",
+          "items": [
+            {
+              "name": "GIC Applictor",
+              "expectedQty": "1"
+            }
+          ]
+        },
+        {
+          "name": "L15 - GIC \u2013 Consumable",
+          "items": [
+            {
+              "name": "GIC FUJI II (min 20 capsules)",
+              "expectedQty": "1 box"
+            },
+            {
+              "name": "GIC FUJI IX (min 20 capsules)",
+              "expectedQty": "1 box"
+            }
+          ]
+        },
+        {
+          "name": "L16 - IMPRESSION TRAYS",
+          "items": [
+            {
+              "name": "Upper Metal Tray U3",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Upper Metal Tray U4",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Upper Metal Tray U5",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Upper Metal Tray U6",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Lower Metal Tray L3",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Lower Metal Tray L4",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Lower Metal Tray L5",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Lower Metal Tray L6",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Edentulous Tray U3",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Edentulous Tray U4",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Edentulous Tray U5",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Edentulous Tray L3",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Edentulous Tray L4",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Edentulous Tray L5",
+              "expectedQty": "1"
+            }
+          ]
+        },
+        {
+          "name": "L17",
+          "items": [
+            {
+              "name": "High vac suction Adaptor",
+              "expectedQty": "2"
+            }
+          ]
+        },
+        {
+          "name": "L17 \u2013 Consumable",
+          "items": [
+            {
+              "name": "Cups",
+              "expectedQty": "FULL"
+            },
+            {
+              "name": "White tip Surgical suction",
+              "expectedQty": "FULL"
+            },
+            {
+              "name": "Salivary Ejector",
+              "expectedQty": "FULL"
+            },
+            {
+              "name": "Bibs",
+              "expectedQty": "FULL"
+            }
+          ]
+        },
+        {
+          "name": "L18",
+          "items": [
+            {
+              "name": "E&D Trays",
+              "expectedQty": "10"
+            },
+            {
+              "name": "Tray",
+              "expectedQty": null
+            },
+            {
+              "name": "Mouth Mirror",
+              "expectedQty": null
+            },
+            {
+              "name": "Tweezer",
+              "expectedQty": null
+            },
+            {
+              "name": "Sharp proble",
+              "expectedQty": null
+            },
+            {
+              "name": "Triple Syringe",
+              "expectedQty": null
+            },
+            {
+              "name": "High Vac",
+              "expectedQty": null
+            },
+            {
+              "name": "Scaler tip with Top Wrench",
+              "expectedQty": "10"
+            }
+          ]
+        },
+        {
+          "name": "L19",
+          "items": [
+            {
+              "name": "Disposible Fluoride Trays",
+              "expectedQty": "Full"
+            },
+            {
+              "name": "Fluoride gel Bottle",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Disposible syringe",
+              "expectedQty": null
+            },
+            {
+              "name": "Irrigation Needles (pink)",
+              "expectedQty": null
+            }
+          ]
+        },
+        {
+          "name": "L20",
+          "items": [
+            {
+              "name": "Invisalign Tray Upper S",
+              "expectedQty": "5"
+            },
+            {
+              "name": "Invisalign Tray Upper M",
+              "expectedQty": "5"
+            },
+            {
+              "name": "Invisalign Tray Upper L",
+              "expectedQty": "5"
+            },
+            {
+              "name": "Invisalign Tray Upper XL",
+              "expectedQty": "5"
+            },
+            {
+              "name": "Invislaign Tray Lower S",
+              "expectedQty": "5"
+            },
+            {
+              "name": "Invislaign Tray Lower M",
+              "expectedQty": "5"
+            },
+            {
+              "name": "Invislaign Tray Lower L",
+              "expectedQty": "5"
+            },
+            {
+              "name": "Invislaign Tray Lower XL",
+              "expectedQty": "5"
+            }
+          ]
+        },
+        {
+          "name": "U1",
+          "items": [
+            {
+              "name": "Doctors cabinet",
+              "expectedQty": null
+            }
+          ]
+        },
+        {
+          "name": "U2",
+          "items": [
+            {
+              "name": "EMPTY",
+              "expectedQty": null
+            }
+          ]
+        },
+        {
+          "name": "U3",
+          "items": [
+            {
+              "name": "Glove Size S",
+              "expectedQty": "10 box"
+            }
+          ]
+        },
+        {
+          "name": "U4 - please use lower tier for clinical stuff and upper 2 tiers for storage",
+          "items": [
+            {
+              "name": "Apex Locator",
+              "expectedQty": "1 set"
+            },
+            {
+              "name": "Pulp Test",
+              "expectedQty": "1 set"
+            },
+            {
+              "name": "Endo Ice ( 1 in use , 1 stock)",
+              "expectedQty": "2"
+            },
+            {
+              "name": "Photo Kit (Mirrors and Retractor",
+              "expectedQty": "1 Set"
+            },
+            {
+              "name": "Alginate tub",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Alginate Bowl",
+              "expectedQty": "2"
+            },
+            {
+              "name": "Alginate mixing Spatula",
+              "expectedQty": "2"
+            },
+            {
+              "name": "Water Measuring cup",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Alginate Scop",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Saline Bottle",
+              "expectedQty": "2"
+            },
+            {
+              "name": "Alginate packs",
+              "expectedQty": "2"
+            },
+            {
+              "name": "Cotton pellets",
+              "expectedQty": "1 box"
+            },
+            {
+              "name": "Cotton Rolls",
+              "expectedQty": "2 box"
+            },
+            {
+              "name": "Butane fuel",
+              "expectedQty": "1"
+            }
+          ]
+        },
+        {
+          "name": "U5",
+          "items": [
+            {
+              "name": "Fluorinze Mouth wash",
+              "expectedQty": "13"
+            }
+          ]
+        },
+        {
+          "name": "U6",
+          "items": [
+            {
+              "name": "Glove size XS",
+              "expectedQty": "10 box"
+            }
+          ]
+        },
+        {
+          "name": "U7",
+          "items": [
+            {
+              "name": "Earloop mask",
+              "expectedQty": "1 Box"
+            },
+            {
+              "name": "Isolation gown",
+              "expectedQty": "Full"
+            },
+            {
+              "name": "N95 Mask",
+              "expectedQty": "1 Box"
+            },
+            {
+              "name": "Mask with face shield",
+              "expectedQty": "1 Box"
+            }
+          ]
+        },
+        {
+          "name": "Table Top",
+          "items": [
+            {
+              "name": "Amalgamator",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Light Cure",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Light Cure Shield",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Endo Motor",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Patient Goggles",
+              "expectedQty": "3"
+            },
+            {
+              "name": "Bur Holder (Blue)",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Denture Bur Holder",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Crown Bur Set",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Endo Bur Set",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Light Cure Sleeves",
+              "expectedQty": "1 box"
+            },
+            {
+              "name": "Gauze & Cotton Pellets Container",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Cotton Roll Stand",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Spatulla (table top)",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Extra Tweezer (table top)",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Alcohol Bottles (white)",
+              "expectedQty": "2"
+            },
+            {
+              "name": "MirkozoidSpray Bottle",
+              "expectedQty": "1"
+            },
+            {
+              "name": "BactiShield  Handwash",
+              "expectedQty": "1"
+            },
+            {
+              "name": "BactiShield Handrub",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Chlorhexidine (100 ml bottle)",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Mirror",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Micro 10  Small container for PA Holder",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Torch",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Bib Holder (on dental chair)",
+              "expectedQty": "1"
+            }
+          ]
+        },
+        {
+          "name": "X-ray Room",
+          "items": [
+            {
+              "name": "Vistascan Machine",
+              "expectedQty": "1"
+            },
+            {
+              "name": "PA Film (2+)",
+              "expectedQty": "1"
+            },
+            {
+              "name": "PA Film Sleeves",
+              "expectedQty": "1 box"
+            },
+            {
+              "name": "PA Film Holder Box",
+              "expectedQty": "1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "green",
+      "name": "Green Room",
+      "sections": [
+        {
+          "name": "L3-PROPHY",
+          "items": [
+            {
+              "name": "Prophy Jet handpiece",
+              "expectedQty": null
+            },
+            {
+              "name": "Prophy Powder Bottle",
+              "expectedQty": null
+            }
+          ]
+        },
+        {
+          "name": "L4-EXTRACTION",
+          "items": [
+            {
+              "name": "Suture Set (needle holder &tissue holder)",
+              "expectedQty": "1set"
+            },
+            {
+              "name": "Needle Holder  (Crile Murray)",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Tissue Holder",
+              "expectedQty": "1"
+            },
+            {
+              "name": "LAOP SET -(In LAOP Tray)",
+              "expectedQty": null
+            },
+            {
+              "name": "Austin retractor",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Periosteal elevator",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Scapel blade holder",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Root pick",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Galipot",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Minnisota retractor",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Surgical spoon",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Bone Ronguer",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Tissue holder",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Needle holder (castro)",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Sto Scissors",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Mitchell",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Artery Forcep",
+              "expectedQty": "2"
+            },
+            {
+              "name": "Luxator",
+              "expectedQty": "2"
+            },
+            {
+              "name": "Couplands",
+              "expectedQty": "3"
+            },
+            {
+              "name": "Root pick",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Warwick james left",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Warwick james right",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Surgical burs (1 set) (round & tapered)",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Sto Scissors",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Scapel blade holder",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Galipot",
+              "expectedQty": "1"
+            }
+          ]
+        },
+        {
+          "name": "L4-EXTRACTION \u2013 Consumable",
+          "items": [
+            {
+              "name": "Sterilised Gauze ( min 5)",
+              "expectedQty": null
+            }
+          ]
+        },
+        {
+          "name": "L5 -DENTURE",
+          "items": [
+            {
+              "name": "Hot Plate",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Wax Knife",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Shade guide (delphic)",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Lecron Carver",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Indelible pencil",
+              "expectedQty": "1"
+            }
+          ]
+        },
+        {
+          "name": "L5 -DENTURE \u2013 Consumable",
+          "items": [
+            {
+              "name": "Metro wax (min 1box)",
+              "expectedQty": null
+            },
+            {
+              "name": "Green Stick (min 5 sticks)",
+              "expectedQty": null
+            }
+          ]
+        },
+        {
+          "name": "L6 -FILLING",
+          "items": [
+            {
+              "name": "Ring Holder",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Glass Dappen Dish",
+              "expectedQty": "5"
+            },
+            {
+              "name": "Matrix Band Holder (to order 2)",
+              "expectedQty": "2"
+            },
+            {
+              "name": "Glass slab",
+              "expectedQty": "1"
+            }
+          ]
+        },
+        {
+          "name": "L6 -FILLING \u2013 Consumable",
+          "items": [
+            {
+              "name": "Articulating paper",
+              "expectedQty": null
+            },
+            {
+              "name": "Clear matrix (min 10 pcs)",
+              "expectedQty": null
+            },
+            {
+              "name": "Polishing Paste",
+              "expectedQty": null
+            },
+            {
+              "name": "Metal Matrix (min 10 pcs)",
+              "expectedQty": null
+            },
+            {
+              "name": "Soflex Disc (min 10 pcs) all 3 colors",
+              "expectedQty": null
+            },
+            {
+              "name": "Polishing Strip (Coarse)",
+              "expectedQty": null
+            },
+            {
+              "name": "Polishing Strip (Medium)",
+              "expectedQty": null
+            },
+            {
+              "name": "Composite A2 Gaenial",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Composite A02 Gaenial",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Composite A3 Gaenial",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Composite AO3 Gaenial",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Composite A2 Solarex",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Composite A2 0Solarex",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Flowable A2",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Etchant",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Theracal (Dycal)",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Vaseline",
+              "expectedQty": null
+            }
+          ]
+        },
+        {
+          "name": "Sectional Matrix Set",
+          "items": [
+            {
+              "name": "Sectional Matrix S (MIN 10pieces)",
+              "expectedQty": null
+            },
+            {
+              "name": "Sectional Matrix M (MIN 10pieces)",
+              "expectedQty": null
+            },
+            {
+              "name": "Sectional Matrix L  (MIN 10pieces)",
+              "expectedQty": null
+            },
+            {
+              "name": "Sectional Matrix S  with ledge  (MIN 10pieces)",
+              "expectedQty": null
+            },
+            {
+              "name": "Sectional Matrix M with ledge (MIN 10pieces)",
+              "expectedQty": null
+            },
+            {
+              "name": "Sectional Matrix L with Ledge  (MIN 10pieces)",
+              "expectedQty": null
+            },
+            {
+              "name": "Sectional Matrix S",
+              "expectedQty": null
+            },
+            {
+              "name": "Standard Ring",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Delta Ring (Fork)",
+              "expectedQty": "1"
+            },
+            {
+              "name": "G Ring (Garrison)",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Green Plastic for Ring",
+              "expectedQty": null
+            },
+            {
+              "name": "Small Plastic Wedge (Blue)",
+              "expectedQty": null
+            },
+            {
+              "name": "Medium plastic Wedge (Yellow)",
+              "expectedQty": null
+            }
+          ]
+        },
+        {
+          "name": "Strata G - Garrison Matrix Set",
+          "items": [
+            {
+              "name": "Sectional Matrixes",
+              "expectedQty": null
+            },
+            {
+              "name": "SS  Premolar FXH100",
+              "expectedQty": null
+            },
+            {
+              "name": "SS  Premolar w/deep cervical prep FXH150",
+              "expectedQty": null
+            },
+            {
+              "name": "SS  Premolar/ small molars  FXH175",
+              "expectedQty": null
+            },
+            {
+              "name": "SS  Molar FXH200",
+              "expectedQty": null
+            },
+            {
+              "name": "SS  Molar with/deep cervical prep  FXH300",
+              "expectedQty": null
+            },
+            {
+              "name": "Coated Pediatric  SG050",
+              "expectedQty": null
+            },
+            {
+              "name": "Coated Premolar   SG100",
+              "expectedQty": null
+            },
+            {
+              "name": "Coated Premolar/Small Molars   SG175",
+              "expectedQty": null
+            },
+            {
+              "name": "Coated Molars   SG200",
+              "expectedQty": null
+            },
+            {
+              "name": "Coated Molars  w/ Deep cervical preps SG300",
+              "expectedQty": null
+            },
+            {
+              "name": "Wedge (Yellow) SGYL",
+              "expectedQty": null
+            },
+            {
+              "name": "Wedge (Blue) SGBL",
+              "expectedQty": null
+            },
+            {
+              "name": "Wedge (Orange) SGOR",
+              "expectedQty": null
+            },
+            {
+              "name": "Wedge (Green) SGR",
+              "expectedQty": null
+            },
+            {
+              "name": "Margin elevation band SMT 500 H10",
+              "expectedQty": null
+            },
+            {
+              "name": "Anterior Strip VS01",
+              "expectedQty": null
+            },
+            {
+              "name": "Garrison Ring Blue SG400",
+              "expectedQty": null
+            },
+            {
+              "name": "Garrison Ring Orange SG500",
+              "expectedQty": null
+            }
+          ]
+        },
+        {
+          "name": "L7 -LA",
+          "items": [
+            {
+              "name": "LA Syringe",
+              "expectedQty": "4"
+            },
+            {
+              "name": "Mouth Prop",
+              "expectedQty": "1"
+            }
+          ]
+        },
+        {
+          "name": "L7 -LA \u2013 Consumable",
+          "items": [
+            {
+              "name": "LA Catrige 2%",
+              "expectedQty": null
+            },
+            {
+              "name": "LA Catrige 4%",
+              "expectedQty": null
+            },
+            {
+              "name": "Topical LA Gel (min 1 btl)",
+              "expectedQty": null
+            },
+            {
+              "name": "Cotton Bud",
+              "expectedQty": null
+            },
+            {
+              "name": "Suture Non-Absorbable (min 5)",
+              "expectedQty": null
+            },
+            {
+              "name": "Spongiostan/Gelita (min 5)",
+              "expectedQty": null
+            },
+            {
+              "name": "Dental Needle (Short) 0.30x22mm",
+              "expectedQty": null
+            },
+            {
+              "name": "Dental Needle (Long) 0.40x41mm",
+              "expectedQty": null
+            }
+          ]
+        },
+        {
+          "name": "L8 -FILLING INSTRUMENT & HANDPIECES",
+          "items": [
+            {
+              "name": "Filling Set -",
+              "expectedQty": "5 Sets"
+            },
+            {
+              "name": "- plastic 6",
+              "expectedQty": null
+            },
+            {
+              "name": "- Ball Burnisher",
+              "expectedQty": null
+            },
+            {
+              "name": "- Spoon Excavator",
+              "expectedQty": null
+            },
+            {
+              "name": "Dycal Applicator",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Perio Probe",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Millers Holder/Articulating paper holder",
+              "expectedQty": "3"
+            },
+            {
+              "name": "Hand Scaler /Sickle Scaler",
+              "expectedQty": "3"
+            },
+            {
+              "name": "Straight handpiece",
+              "expectedQty": "2"
+            },
+            {
+              "name": "Slow Speed Handpiece",
+              "expectedQty": "7"
+            },
+            {
+              "name": "High Speed Handpiece",
+              "expectedQty": "5"
+            }
+          ]
+        },
+        {
+          "name": "L9 -EXTRACTION",
+          "items": [
+            {
+              "name": "Lower Incisor Forcep",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Lower Premolar Forcep",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Lower Molar Forcep",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Lower Special 8",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Lower Root Forcep",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Upper Anterior Forcep",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Upper Premolar Forcep",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Upper Right Molar Forcep",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Upper Left Molar Forcep",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Upper Special 8",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Upper root forcep",
+              "expectedQty": "2"
+            }
+          ]
+        },
+        {
+          "name": "L10 -PROSTHO(Crown)",
+          "items": [
+            {
+              "name": "Cord Packer",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Dispensing Gun",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Vita Shade Guide",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Sectional Metal Tray",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Scapel with Blade & Cover",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Diposable Tray Q1/Q3",
+              "expectedQty": null
+            },
+            {
+              "name": "Diposable Tray Q2/ Q4",
+              "expectedQty": null
+            },
+            {
+              "name": "Temp Crown Material",
+              "expectedQty": null
+            },
+            {
+              "name": "Light Body",
+              "expectedQty": null
+            },
+            {
+              "name": "Medium Body APS",
+              "expectedQty": null
+            },
+            {
+              "name": "Putty",
+              "expectedQty": null
+            },
+            {
+              "name": "Retraction cord 00",
+              "expectedQty": null
+            },
+            {
+              "name": "Retraction cord 000",
+              "expectedQty": null
+            },
+            {
+              "name": "Adhesive Bottle",
+              "expectedQty": null
+            },
+            {
+              "name": "Temp Cement Material",
+              "expectedQty": null
+            },
+            {
+              "name": "Mixing Tips (Yellow)",
+              "expectedQty": null
+            },
+            {
+              "name": "Mixing Tips (Yellow, small tips)",
+              "expectedQty": null
+            },
+            {
+              "name": "Mixing Tips (Green)",
+              "expectedQty": null
+            },
+            {
+              "name": "Mixing Tips for temp crown",
+              "expectedQty": null
+            },
+            {
+              "name": "Disposable Trays",
+              "expectedQty": null
+            }
+          ]
+        },
+        {
+          "name": "L13 -(Root Canal)RCT",
+          "items": [
+            {
+              "name": "Rubber Dam Set --",
+              "expectedQty": null
+            },
+            {
+              "name": "Puncher",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Frame",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Clamp Holder",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Sto Scissors",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Galipot",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Endo Box",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Endo Measuring Box",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Protaper set (6 files)",
+              "expectedQty": "1 set"
+            },
+            {
+              "name": "Endo Plugger",
+              "expectedQty": "2"
+            },
+            {
+              "name": "Rubber Damp Clamps (In Box) : 1T,2A, 7 ,8 ,912A, 13A ,14A",
+              "expectedQty": "8"
+            }
+          ]
+        },
+        {
+          "name": "L14 -(Root Canal)RCT",
+          "items": [
+            {
+              "name": "Gutta Percha (GP Point)",
+              "expectedQty": "1box"
+            },
+            {
+              "name": "Paper Points",
+              "expectedQty": "1box"
+            },
+            {
+              "name": "Sealant (AH PLUS)",
+              "expectedQty": "1set"
+            },
+            {
+              "name": "Bunsen Burner (on the table top)",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Barbed Broach (min 3pieces)",
+              "expectedQty": null
+            },
+            {
+              "name": "F1 Protaper GP",
+              "expectedQty": "1"
+            },
+            {
+              "name": "F2 Protaper GP",
+              "expectedQty": "1"
+            },
+            {
+              "name": "F3 Protaper GP",
+              "expectedQty": "1"
+            }
+          ]
+        },
+        {
+          "name": "L15 - GIC",
+          "items": [
+            {
+              "name": "GIC Applictor",
+              "expectedQty": "1"
+            }
+          ]
+        },
+        {
+          "name": "L15 - GIC \u2013 Consumable",
+          "items": [
+            {
+              "name": "GIC FUJI II (min 20 capsules)",
+              "expectedQty": "1 box"
+            },
+            {
+              "name": "GIC FUJI IX (min 20 capsules)",
+              "expectedQty": "1 box"
+            }
+          ]
+        },
+        {
+          "name": "L16 - IMPRESSION TRAYS",
+          "items": [
+            {
+              "name": "Upper Metal Tray U3",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Upper Metal Tray U4",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Upper Metal Tray U5",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Upper Metal Tray U6",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Lower Metal Tray L3",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Lower Metal Tray L4",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Lower Metal Tray L5",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Lower Metal Tray L6",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Edentulous Tray U3",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Edentulous Tray U4",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Edentulous Tray U5",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Edentulous Tray L3",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Edentulous Tray L4",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Edentulous Tray L5",
+              "expectedQty": "1"
+            }
+          ]
+        },
+        {
+          "name": "L17",
+          "items": [
+            {
+              "name": "High vac suction Adaptor",
+              "expectedQty": "2"
+            }
+          ]
+        },
+        {
+          "name": "L17 \u2013 Consumable",
+          "items": [
+            {
+              "name": "Cups",
+              "expectedQty": "FULL"
+            },
+            {
+              "name": "White tip Surgical suction",
+              "expectedQty": "FULL"
+            },
+            {
+              "name": "Salivary Ejector",
+              "expectedQty": "FULL"
+            },
+            {
+              "name": "Bibs",
+              "expectedQty": "FULL"
+            }
+          ]
+        },
+        {
+          "name": "L18",
+          "items": [
+            {
+              "name": "E&D Tray Sets",
+              "expectedQty": "10"
+            },
+            {
+              "name": "Tray",
+              "expectedQty": null
+            },
+            {
+              "name": "Mouth Mirror",
+              "expectedQty": null
+            },
+            {
+              "name": "Tweezer",
+              "expectedQty": null
+            },
+            {
+              "name": "Sharp proble",
+              "expectedQty": null
+            },
+            {
+              "name": "Triple Syringe",
+              "expectedQty": null
+            },
+            {
+              "name": "High Vac",
+              "expectedQty": null
+            },
+            {
+              "name": "Scaler tip with Top Wrench",
+              "expectedQty": "10"
+            }
+          ]
+        },
+        {
+          "name": "L19 - Fluoride Trays & Gel",
+          "items": [
+            {
+              "name": "Disposible Fluoride Trays",
+              "expectedQty": "Full"
+            },
+            {
+              "name": "Fluoride gel Bottle",
+              "expectedQty": "1"
+            }
+          ]
+        },
+        {
+          "name": "L20",
+          "items": [
+            {
+              "name": "Invisalign Tray Upper S",
+              "expectedQty": "5"
+            },
+            {
+              "name": "Invisalign Tray Upper M",
+              "expectedQty": "5"
+            },
+            {
+              "name": "Invisalign Tray Upper L",
+              "expectedQty": "5"
+            },
+            {
+              "name": "Invisalign Tray Upper XL",
+              "expectedQty": "5"
+            },
+            {
+              "name": "Invislaign Tray Lower S",
+              "expectedQty": "5"
+            },
+            {
+              "name": "Invislaign Tray Lower M",
+              "expectedQty": "5"
+            },
+            {
+              "name": "Invislaign Tray Lower L",
+              "expectedQty": "5"
+            },
+            {
+              "name": "Invislaign Tray Lower XL",
+              "expectedQty": "5"
+            }
+          ]
+        },
+        {
+          "name": "U1",
+          "items": [
+            {
+              "name": "Doctors cabinet",
+              "expectedQty": null
+            }
+          ]
+        },
+        {
+          "name": "U2",
+          "items": [
+            {
+              "name": "Storage for stocks",
+              "expectedQty": "Please check general stock take list"
+            }
+          ]
+        },
+        {
+          "name": "U3",
+          "items": [
+            {
+              "name": "Glove Size S",
+              "expectedQty": "8 boxes"
+            }
+          ]
+        },
+        {
+          "name": "U4 (Please use lowest tier for clinical stuff , upper 2 tiers for storage)",
+          "items": [
+            {
+              "name": "Pulp Test",
+              "expectedQty": "1 set"
+            },
+            {
+              "name": "Endo Ice ( 1 in use , 1 stock)",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Alginate tub",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Alginate Scoop",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Alginate Bowl",
+              "expectedQty": "2"
+            },
+            {
+              "name": "Alginate mixing Spatula",
+              "expectedQty": "2"
+            },
+            {
+              "name": "Water Measuring cup",
+              "expectedQty": "1"
+            }
+          ]
+        },
+        {
+          "name": "U5",
+          "items": [
+            {
+              "name": "Storage for stocks",
+              "expectedQty": "Please check general stock take list"
+            }
+          ]
+        },
+        {
+          "name": "U6",
+          "items": [
+            {
+              "name": "Glove size XS",
+              "expectedQty": "8box"
+            }
+          ]
+        },
+        {
+          "name": "U7",
+          "items": [
+            {
+              "name": "Earloop mask",
+              "expectedQty": "1 Box"
+            },
+            {
+              "name": "Isolation gown",
+              "expectedQty": "Full"
+            },
+            {
+              "name": "N95 Mask",
+              "expectedQty": "1 Box"
+            },
+            {
+              "name": "Mask with face shield",
+              "expectedQty": "1 Box"
+            }
+          ]
+        },
+        {
+          "name": "Table Top",
+          "items": [
+            {
+              "name": "Amalgamator",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Light Cure",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Light Cure Shield",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Patient Goggles",
+              "expectedQty": "3"
+            },
+            {
+              "name": "Bur stand with burs",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Denture Bur stand",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Light Cure Sleeves",
+              "expectedQty": "1 box"
+            },
+            {
+              "name": "Gauze & Cotton Pellets Container",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Cotton Roll Stand",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Tweezer",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Mixing Spatula",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Alcohol Bottles (white)",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Mirkozoid Spray bottle",
+              "expectedQty": "1"
+            },
+            {
+              "name": "BactiShield  Handwash",
+              "expectedQty": "1"
+            },
+            {
+              "name": "BactiShield Handrub",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Chlorhexidine (100 ml bottle)",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Mirror",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Micro 10  Small container for PA Holder",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Torch",
+              "expectedQty": "1"
+            },
+            {
+              "name": "Bib holder on dental chair",
+              "expectedQty": "1"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
