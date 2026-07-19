@@ -52,6 +52,27 @@ only seeds `items`/`sections` when those tables are empty. To pick up
 changes on an existing deployment, delete `data/stock-check.db` (you'll
 lose check history) or extend `lib/db.ts` with a migration.
 
+## Free preview deploy (Render)
+
+To try the app on a phone/laptop without installing anything locally, there's
+a `render.yaml` Blueprint in the repo root that deploys this branch to
+Render's free tier in a few clicks:
+
+1. Sign up at [render.com](https://render.com) with GitHub (free, no card
+   required for the free tier).
+2. **New** → **Blueprint** → select the `teamkindentalcentre/index`
+   repository. Render reads `render.yaml` and pre-fills everything.
+3. Click **Apply**. The build takes a couple of minutes; Render then gives
+   you a `https://room-stock-check-xxxx.onrender.com` URL.
+4. Open that URL — that's the whole app, ready to use on any device.
+
+**This is a preview, not the permanent setup:** Render's free tier has no
+persistent disk, so the SQLite data can reset on redeploys and the service
+spins down after ~15 minutes of inactivity (the next open takes a few extra
+seconds to wake up). That's fine for trying out the checklist flow, but
+before nurses rely on it day-to-day, move to a host with a persistent disk
+(see below) and point your own domain at it.
+
 ## Deploying
 
 This needs a host that runs a persistent Node.js process with a writable,

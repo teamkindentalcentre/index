@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: room-stock-check
+    runtime: node
+    plan: free
+    branch: claude/stock-check-web-app-t5hvb6
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    healthCheckPath: /
