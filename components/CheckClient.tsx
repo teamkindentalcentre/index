@@ -165,8 +165,10 @@ export function CheckClient({ checklist }: { checklist: RoomChecklist }) {
                 {section.items.map((item) => (
                   <ItemRow
                     key={item.id}
+                    itemId={item.id}
                     name={item.name}
                     expectedQty={item.expectedQty}
+                    hasPhoto={item.hasPhoto}
                     present={answers[item.id]?.present ?? null}
                     note={answers[item.id]?.note ?? ""}
                     onSetPresent={(present) => setPresent(item.id, present)}

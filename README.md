@@ -7,7 +7,9 @@ equipment check that used to be done on paper/Excel
 Nurses pick a room, enter their name, and tick every drawer/cabinet item as
 Present or Missing (with an optional note). Completed checks are saved
 centrally so anyone can review the history of checks and see what was
-flagged as missing, from any device.
+flagged as missing, from any device. Each item can also have a reference
+photo — anyone can add or replace one right from the checklist, so the photo
+library builds up gradually through normal use.
 
 ## How it works
 
@@ -78,6 +80,10 @@ before nurses rely on it day-to-day, move to a host with a persistent disk
 This needs a host that runs a persistent Node.js process with a writable,
 persistent disk (for the SQLite file) — **not** a serverless platform like
 Vercel, since serverless functions don't keep local files between requests.
+
+Uploaded item reference photos are stored as plain files under
+`data/item-photos/`, alongside the SQLite file — make sure the persistent
+volume covers the whole `data/` directory, not just the `.db` file.
 
 Good options for a small clinic app:
 

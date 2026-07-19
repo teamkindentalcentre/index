@@ -1,6 +1,7 @@
 import Database from "better-sqlite3";
 import fs from "node:fs";
 import path from "node:path";
+import { getDbPath } from "@/lib/paths";
 
 export type SeedItem = { name: string; expectedQty: string | null };
 export type SeedSection = { name: string; items: SeedItem[] };
@@ -52,16 +53,30 @@ CREATE INDEX IF NOT EXISTS idx_results_session ON check_results(session_id);
 `;
 
 function openDatabase(): Database.Database {
-  const dbPath =
-    process.env.DB_PATH || path.join(process.cwd(), "data", "stock-check.db");
+  const dbPath = getDbPath();
   fs.mkdirSync(path.dirname(dbPath), { recursive: true });
 
   const db = new Database(dbPath);
   db.pragma("journal_mode = WAL");
   db.pragma("foreign_keys = ON");
   db.exec(SCHEMA);
+  migrate(db);
   seedIfEmpty(db);
   return db;
+}
+
+function migrate(db: Database.Database) {
+  const columns = db.prepare("PRAGMA table_info(items)").all() as {
+    name: string;
+  }[];
+  const columnNames = new Set(columns.map((c) => c.name));
+
+  if (!columnNames.has("photo_path")) {
+    db.exec("ALTER TABLE items ADD COLUMN photo_path TEXT");
+  }
+  if (!columnNames.has("photo_mime")) {
+    db.exec("ALTER TABLE items ADD COLUMN photo_mime TEXT");
+  }
 }
 
 function seedIfEmpty(db: Database.Database) {

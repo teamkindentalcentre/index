@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getSessionDetail } from "@/lib/queries";
 import { getRoomTheme } from "@/lib/theme";
 import { formatDateTime } from "@/lib/format";
+import { MissingItemPhoto } from "@/components/MissingItemPhoto";
 
 export default async function SessionDetailPage({
   params,
@@ -72,6 +73,11 @@ export default async function SessionDetailPage({
                     Note: {result.note}
                   </p>
                 )}
+                <MissingItemPhoto
+                  itemId={result.itemId}
+                  itemName={result.itemName}
+                  hasPhoto={result.hasPhoto}
+                />
               </li>
             ))}
           </ul>

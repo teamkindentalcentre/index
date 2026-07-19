@@ -7,6 +7,7 @@ export type ChecklistItem = {
   name: string;
   expectedQty: string | null;
   sortOrder: number;
+  hasPhoto: boolean;
 };
 
 export type ChecklistSection = {
@@ -47,16 +48,45 @@ export function getRoomChecklist(roomId: string): RoomChecklist | null {
     .all(roomId) as { id: number; name: string }[];
 
   const itemStmt = db.prepare(
-    "SELECT id, name, expected_qty AS expectedQty, sort_order AS sortOrder FROM items WHERE section_id = ? ORDER BY sort_order",
+    `SELECT id, name, expected_qty AS expectedQty, sort_order AS sortOrder,
+            (photo_path IS NOT NULL) AS hasPhoto
+     FROM items WHERE section_id = ? ORDER BY sort_order`,
   );
 
   const sections: ChecklistSection[] = sectionRows.map((section) => ({
     id: section.id,
     name: section.name,
-    items: itemStmt.all(section.id) as ChecklistItem[],
+    items: (
+      itemStmt.all(section.id) as (Omit<ChecklistItem, "hasPhoto"> & {
+        hasPhoto: number;
+      })[]
+    ).map((item) => ({ ...item, hasPhoto: Boolean(item.hasPhoto) })),
   }));
 
   return { room, sections };
+}
+
+export type ItemPhoto = { photoPath: string | null; photoMime: string | null };
+
+export function getItemPhoto(itemId: number): ItemPhoto | null {
+  const db = getDb();
+  const row = db
+    .prepare(
+      "SELECT photo_path AS photoPath, photo_mime AS photoMime FROM items WHERE id = ?",
+    )
+    .get(itemId) as ItemPhoto | undefined;
+  return row ?? null;
+}
+
+export function setItemPhoto(
+  itemId: number,
+  photoPath: string,
+  photoMime: string,
+): void {
+  const db = getDb();
+  db.prepare(
+    "UPDATE items SET photo_path = ?, photo_mime = ? WHERE id = ?",
+  ).run(photoPath, photoMime, itemId);
 }
 
 export type SubmitResultInput = {
@@ -158,6 +188,7 @@ export type SessionResultDetail = {
   expectedQty: string | null;
   present: boolean;
   note: string | null;
+  hasPhoto: boolean;
 };
 
 export type SessionDetail = SessionSummary & {
@@ -184,20 +215,23 @@ export function getSessionDetail(sessionId: number): SessionDetail | null {
          s.name AS sectionName,
          i.expected_qty AS expectedQty,
          cr.present AS present,
-         cr.note AS note
+         cr.note AS note,
+         (i.photo_path IS NOT NULL) AS hasPhoto
        FROM check_results cr
        JOIN items i ON i.id = cr.item_id
        JOIN sections s ON s.id = i.section_id
        WHERE cr.session_id = ?
        ORDER BY s.sort_order, i.sort_order`,
     )
-    .all(sessionId) as (Omit<SessionResultDetail, "present"> & {
+    .all(sessionId) as (Omit<SessionResultDetail, "present" | "hasPhoto"> & {
     present: number;
+    hasPhoto: number;
   })[];
 
   const results: SessionResultDetail[] = resultRows.map((row) => ({
     ...row,
     present: Boolean(row.present),
+    hasPhoto: Boolean(row.hasPhoto),
   }));
 
   return { ...session, room, results };
