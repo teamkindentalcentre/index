@@ -43,14 +43,14 @@ export function getRoomChecklist(roomId: string): RoomChecklist | null {
 
   const sectionRows = db
     .prepare(
-      "SELECT id, name FROM sections WHERE room_id = ? ORDER BY sort_order",
+      "SELECT id, name FROM sections WHERE room_id = ? AND active = 1 ORDER BY sort_order",
     )
     .all(roomId) as { id: number; name: string }[];
 
   const itemStmt = db.prepare(
     `SELECT id, name, expected_qty AS expectedQty, sort_order AS sortOrder,
             (photo_path IS NOT NULL) AS hasPhoto
-     FROM items WHERE section_id = ? ORDER BY sort_order`,
+     FROM items WHERE section_id = ? AND active = 1 ORDER BY sort_order`,
   );
 
   const sections: ChecklistSection[] = sectionRows.map((section) => ({
@@ -64,6 +64,90 @@ export function getRoomChecklist(roomId: string): RoomChecklist | null {
   }));
 
   return { room, sections };
+}
+
+export function addSection(roomId: string, name: string): number {
+  const db = getDb();
+  const { maxOrder } = db
+    .prepare(
+      "SELECT COALESCE(MAX(sort_order), -1) AS maxOrder FROM sections WHERE room_id = ?",
+    )
+    .get(roomId) as { maxOrder: number };
+
+  return db
+    .prepare(
+      "INSERT INTO sections (room_id, name, sort_order) VALUES (?, ?, ?)",
+    )
+    .run(roomId, name.trim(), maxOrder + 1).lastInsertRowid as number;
+}
+
+export function renameSection(sectionId: number, name: string): void {
+  const db = getDb();
+  db.prepare("UPDATE sections SET name = ? WHERE id = ?").run(
+    name.trim(),
+    sectionId,
+  );
+}
+
+export function deleteSection(sectionId: number): void {
+  const db = getDb();
+  db.prepare("UPDATE sections SET active = 0 WHERE id = ?").run(sectionId);
+}
+
+export function reorderSections(orderedSectionIds: number[]): void {
+  const db = getDb();
+  const stmt = db.prepare("UPDATE sections SET sort_order = ? WHERE id = ?");
+  const tx = db.transaction((ids: number[]) => {
+    ids.forEach((id, index) => stmt.run(index, id));
+  });
+  tx(orderedSectionIds);
+}
+
+export function addItem(
+  sectionId: number,
+  name: string,
+  expectedQty: string | null,
+): number {
+  const db = getDb();
+  const { maxOrder } = db
+    .prepare(
+      "SELECT COALESCE(MAX(sort_order), -1) AS maxOrder FROM items WHERE section_id = ?",
+    )
+    .get(sectionId) as { maxOrder: number };
+
+  return db
+    .prepare(
+      "INSERT INTO items (section_id, name, expected_qty, sort_order) VALUES (?, ?, ?, ?)",
+    )
+    .run(sectionId, name.trim(), expectedQty?.trim() || null, maxOrder + 1)
+    .lastInsertRowid as number;
+}
+
+export function updateItem(
+  itemId: number,
+  name: string,
+  expectedQty: string | null,
+): void {
+  const db = getDb();
+  db.prepare("UPDATE items SET name = ?, expected_qty = ? WHERE id = ?").run(
+    name.trim(),
+    expectedQty?.trim() || null,
+    itemId,
+  );
+}
+
+export function deleteItem(itemId: number): void {
+  const db = getDb();
+  db.prepare("UPDATE items SET active = 0 WHERE id = ?").run(itemId);
+}
+
+export function reorderItems(orderedItemIds: number[]): void {
+  const db = getDb();
+  const stmt = db.prepare("UPDATE items SET sort_order = ? WHERE id = ?");
+  const tx = db.transaction((ids: number[]) => {
+    ids.forEach((id, index) => stmt.run(index, id));
+  });
+  tx(orderedItemIds);
 }
 
 export type ItemPhoto = { photoPath: string | null; photoMime: string | null };

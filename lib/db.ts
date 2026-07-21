@@ -65,17 +65,31 @@ function openDatabase(): Database.Database {
   return db;
 }
 
-function migrate(db: Database.Database) {
-  const columns = db.prepare("PRAGMA table_info(items)").all() as {
+function columnNamesOf(db: Database.Database, table: string): Set<string> {
+  const columns = db.prepare(`PRAGMA table_info(${table})`).all() as {
     name: string;
   }[];
-  const columnNames = new Set(columns.map((c) => c.name));
+  return new Set(columns.map((c) => c.name));
+}
 
-  if (!columnNames.has("photo_path")) {
+function migrate(db: Database.Database) {
+  const itemColumns = columnNamesOf(db, "items");
+
+  if (!itemColumns.has("photo_path")) {
     db.exec("ALTER TABLE items ADD COLUMN photo_path TEXT");
   }
-  if (!columnNames.has("photo_mime")) {
+  if (!itemColumns.has("photo_mime")) {
     db.exec("ALTER TABLE items ADD COLUMN photo_mime TEXT");
+  }
+  if (!itemColumns.has("active")) {
+    db.exec("ALTER TABLE items ADD COLUMN active INTEGER NOT NULL DEFAULT 1");
+  }
+
+  const sectionColumns = columnNamesOf(db, "sections");
+  if (!sectionColumns.has("active")) {
+    db.exec(
+      "ALTER TABLE sections ADD COLUMN active INTEGER NOT NULL DEFAULT 1",
+    );
   }
 }
 

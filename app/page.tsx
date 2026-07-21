@@ -71,6 +71,12 @@ export default function Home() {
                   History
                 </Link>
               </div>
+              <Link
+                href={`/manage/${room.id}`}
+                className="mt-2 block text-center text-xs text-slate-400 hover:text-slate-600"
+              >
+                Edit checklist
+              </Link>
             </div>
           );
         })}

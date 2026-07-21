@@ -11,6 +11,12 @@ flagged as missing, from any device. Each item can also have a reference
 photo — anyone can add or replace one right from the checklist, so the photo
 library builds up gradually through normal use.
 
+The checklist structure itself (drawer/cabinet names, items, order) can be
+edited from a PIN-protected "Edit checklist" screen — rename a drawer, add a
+newly-purchased item, remove a retired one, or drag things into a new order.
+Removing an item just hides it going forward; past checks that included it
+still show correctly in history.
+
 ## How it works
 
 - **Next.js** (App Router, TypeScript, Tailwind CSS) — one app serving both
@@ -102,6 +108,11 @@ Environment variables:
 
 - `DB_PATH` (optional) — absolute path for the SQLite file. Defaults to
   `<project>/data/stock-check.db`.
+- `MANAGE_PIN` (recommended) — a shared passcode that gates the "Edit
+  checklist" screens (`/manage/**`). **If unset, editing is open to anyone**
+  who finds those URLs — fine for local development, but set this before a
+  real deployment. Once set, unlocking it is a one-time thing per
+  device/browser (a long-lived cookie remembers it).
 - `PORT` (optional) — passed through to `next start` by most hosts
   automatically.
 
