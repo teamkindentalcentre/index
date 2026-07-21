@@ -1,0 +1,29 @@
+# .NET build output
+bin/
+obj/
+out/
+
+# Visual Studio / VS Code
+.vs/
+.vscode/
+*.user
+*.suo
+
+# Rider
+.idea/
+
+# Local databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Secrets and local configuration — never commit API keys or credentials
+appsettings.local.json
+appsettings.*.local.json
+*.secrets.json
+.env
+.env.*
+
+# Logs
+logs/
+*.log
